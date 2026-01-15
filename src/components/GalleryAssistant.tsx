@@ -106,7 +106,10 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
     setIsLoading(true);
 
     try {
-      const history = messages.map(m => ({
+      // Filter out the initial model greeting to satisfy API requirement (History must start with User)
+      const visibleMessages = messages.filter((m, index) => !(index === 0 && m.role === 'model'));
+      
+      const history = visibleMessages.map(m => ({
         role: m.role === 'model' ? 'model' : 'user',
         parts: [{ text: m.text }]
       }));
