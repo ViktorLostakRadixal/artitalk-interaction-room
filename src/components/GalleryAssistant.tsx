@@ -5,6 +5,8 @@ import { Sparkles, Send, X, Bot, TrendingUp, ShieldCheck, Users, AlertTriangle, 
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 
+import { ChatInterface } from "./ChatInterface";
+
 interface GalleryAssistantProps {
     className?: string;
 }
@@ -81,7 +83,7 @@ const MOCK_VISITORS: Visitor[] = [
 
 export function GalleryAssistant({ className }: GalleryAssistantProps) {
   const [input, setInput] = useState("");
-  const [view, setView] = useState<"dashboard" | "chat" | "pr" | "crm">("dashboard");
+  const [view, setView] = useState<"dashboard" | "chat" | "pr" | "crm" | "live_feed">("dashboard");
   const [selectedVisitorId, setSelectedVisitorId] = useState<string | null>(null);
   
   const [messages, setMessages] = useState<Array<{ role: string; text: string }>>([
@@ -192,6 +194,13 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
             >
                 Consultant
                  {view === 'chat' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-black" />}
+            </button>
+            <button 
+                onClick={() => setView("live_feed")}
+                className={`pb-4 transition-colors relative whitespace-nowrap ${view === 'live_feed' ? 'text-black' : 'text-stone-400 hover:text-stone-600'}`}
+            >
+                Live Feed
+                 {view === 'live_feed' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-black" />}
             </button>
         </div>
 
@@ -355,6 +364,12 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                             </div>
                         </div>
                      </div>
+                </div>
+            ) : view === "live_feed" ? (
+                <div className="h-full flex flex-col">
+                    <div className="flex-1">
+                        <ChatInterface />
+                    </div>
                 </div>
             ) : (
                 <div className="space-y-8 max-w-xl mx-auto">

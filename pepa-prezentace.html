@@ -3,26 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EG.D Project Strategy - Interview Deck</title>
+    <title>Strategická Analýza: Projekt EVA</title>
     <style>
-        /* Google Sans Import */
-        @font-face {
-            font-family: 'Google Sans';
-            src: url('[https://fonts.gstatic.com/s/googlesans/v35/4UaGrENHsxJlGwyg_OUCIzQyLQ.woff2](https://fonts.gstatic.com/s/googlesans/v35/4UaGrENHsxJlGwyg_OUCIzQyLQ.woff2)') format('woff2');
-            font-weight: 400;
-        }
-        @font-face {
-            font-family: 'Google Sans';
-            src: url('[https://fonts.gstatic.com/s/googlesans/v35/4UaErENHsxJlGDuGo1OIlLwebty6.woff2](https://fonts.gstatic.com/s/googlesans/v35/4UaErENHsxJlGDuGo1OIlLwebty6.woff2)') format('woff2');
-            font-weight: 700;
-        }
+        /* Google Sans Import - Corrected URLs */
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700;900&display=swap');
 
         :root {
             --egd-red: #E3000F;
             --egd-dark: #1E1E1E;
-            --egd-gray: #F2F2F2;
+            --egd-gray: #F4F4F4;
             --text-main: #333333;
             --radixal-blue: #0056b3;
+            --transition-speed: 0.6s;
         }
 
         body {
@@ -34,13 +26,14 @@
             color: white;
         }
 
-       .slides-container {
+        .slides-container {
             width: 100vw;
             height: 100vh;
             position: relative;
+            perspective: 1000px;
         }
 
-       .slide {
+        .slide {
             position: absolute;
             top: 0;
             left: 0;
@@ -48,68 +41,99 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            transform: translateY(20px);
+            transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(30px) scale(0.95);
             display: flex;
             flex-direction: column;
             background-color: white;
             color: var(--text-main);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-       .slide.active {
+        .slide.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             z-index: 10;
         }
 
+        .slide.prev {
+            transform: translateY(-100%);
+            opacity: 0;
+            z-index: 5;
+        }
+
         /* Slide Layouts */
-       .slide-content {
+        .slide-content {
             flex: 1;
-            padding: 4rem 6rem;
+            padding: 6rem 8rem; /* Increased padding for desktop */
             display: flex;
             flex-direction: column;
             justify-content: center;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
         }
 
-       .header {
+        /* Header */
+        .header {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1.5rem 3rem;
+            padding: 2rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-sizing: border-box;
-            z-index: 20;
+            z-index: 100;
+            pointer-events: none; /* Let clicks pass through */
         }
 
-       .logo-egd {
+        .logo-egd {
             font-weight: 900;
-            font-size: 2rem;
+            font-size: 2.5rem; /* Larger Logo */
             color: var(--egd-red);
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px; /* White crisp box for logo */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-       .logo-egd span { color: var(--text-main); }
+        .logo-egd span { color: var(--text-main); }
+        
+        .header-meta {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            background: rgba(0,0,0,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
 
+        .slide:not(.title-slide) ~ .header .header-meta {
+            color: var(--text-main);
+            background: rgba(0,0,0,0.05);
+        }
+
+        /* Typography */
         h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--egd-dark);
+            font-size: 5rem;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            color: white;
+            letter-spacing: -2px;
         }
 
         h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            margin-bottom: 3rem;
             color: var(--egd-red);
             position: relative;
-            padding-bottom: 1rem;
+            padding-bottom: 1.5rem;
+            letter-spacing: -1px;
         }
         
         h2::after {
@@ -117,22 +141,24 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 80px;
-            height: 4px;
+            width: 120px;
+            height: 6px;
             background: var(--egd-red);
         }
 
         h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--radixal-blue);
             margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         p {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             color: #555;
+            max-width: 90ch;
         }
 
         ul {
@@ -141,333 +167,450 @@
         }
 
         li {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
             position: relative;
+            color: #444;
         }
 
         li::before {
-            content: "•";
+            content: "→";
             color: var(--egd-red);
-            font-weight: bold;
+            font-weight: 900;
             position: absolute;
             left: 0;
         }
 
-        /* Title Slide */
-       .title-slide {
-            background-color: var(--egd-red);
+        /* Title Slide Styling */
+        .title-slide {
+            background: linear-gradient(135deg, var(--egd-red) 0%, #a8000b 100%);
             color: white;
         }
-       .title-slide h1 { color: white; }
-       .title-slide p { color: rgba(255,255,255,0.9); }
-       .title-slide.logo-egd { color: white; }
-       .title-slide.logo-egd span { color: white; }
-
-        /* Grid for split content */
-       .grid-2 {
+        .title-slide h1 { color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .title-slide p { color: rgba(255,255,255,0.9); font-weight: 300; }
+        .title-slide .slide-content { justify-content: flex-end; padding-bottom: 8rem; }
+        
+        /* Grid System */
+        .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            gap: 6rem;
+            align-items: start;
         }
 
-       .card {
+        /* Cards */
+        .card {
             background: var(--egd-gray);
-            padding: 2rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--egd-red);
+            padding: 3rem;
+            border-radius: 16px;
+            border-left: 8px solid var(--egd-red);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
         }
+        .card:hover { transform: translateY(-5px); }
 
-       .highlight {
+        .highlight-text {
             color: var(--egd-red);
             font-weight: 700;
         }
+        
+        .badge {
+            display: inline-block;
+            background: var(--egd-red);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
 
-        /* Radixal Reference Box */
-       .ref-box {
+        /* Reference Box (Viktor) */
+        .ref-box {
             margin-top: 2rem;
             border: 2px solid var(--radixal-blue);
-            padding: 1.5rem;
-            border-radius: 8px;
-            background: rgba(0, 86, 179, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 20px 40px rgba(0, 86, 179, 0.1);
         }
-       .ref-box strong { color: var(--radixal-blue); }
+        .ref-box h3 { margin-top: 0; }
+        .ref-box .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
 
-        /* Navigation */
-       .controls {
-            position: absolute;
-            bottom: 2rem;
-            right: 3rem;
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 3rem;
+            right: 4rem;
             display: flex;
             gap: 1rem;
-            z-index: 100;
+            z-index: 200;
         }
 
-       .btn {
-            background: transparent;
-            border: 2px solid rgba(0,0,0,0.1);
+        .btn {
+            background: rgba(0,0,0,0.05);
+            border: none;
             color: var(--text-main);
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(5px);
         }
 
-       .title-slide.btn { border-color: rgba(255,255,255,0.3); color: white; }
+        .title-slide .btn { background: rgba(255,255,255,0.2); color: white; }
 
-       .btn:hover {
+        .btn:hover {
             background: var(--egd-red);
-            border-color: var(--egd-red);
             color: white;
+            transform: scale(1.1);
         }
 
-       .progress-bar {
-            position: absolute;
+        /* Timeline Graphics */
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .timeline-quarter {
+            width: 80px;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--text-main);
+        }
+        .timeline-bar-bg {
+            flex: 1;
+            background: #e0e0e0;
+            height: 50px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .timeline-bar-fill {
+            height: 100%;
+            background: var(--egd-red);
+            display: flex;
+            align-items: center;
+            padding-left: 1.5rem;
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
             bottom: 0;
             left: 0;
-            height: 5px;
+            width: 100%;
+            height: 8px;
+            background: rgba(0,0,0,0.1);
+            z-index: 200;
+        }
+        .progress-bar {
+            height: 100%;
             background: var(--egd-red);
-            transition: width 0.3s;
-            z-index: 100;
+            width: 0%;
+            transition: width 0.5s;
         }
 
-        /* SVG Icons */
-       .icon-box {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 1rem;
+        /* Diagrams/Visuals */
+        .diagram-circle {
+            width: 400px;
+            height: 400px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+        .diagram-inner {
+            width: 70%;
+            height: 70%;
+            background: var(--egd-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            color: var(--egd-red);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="slides-container">
-        
-        <div class="header">
-            <div class="logo-egd">EG.<span>D</span></div>
-            <div style="font-size: 0.9rem; opacity: 0.7;">Case Study: PM/BA 2025</div>
-        </div>
+    <!-- Header Overlay -->
+    <div class="header">
+        <div class="logo-egd">EG.<span>D</span></div>
+        <div class="header-meta">Case Study: <strong>PM/BA 2026</strong></div>
+    </div>
 
-        <div class="slide title-slide active" data-index="0">
+    <div class="slides-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active" id="slide-0">
             <div class="slide-content">
-                <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; font-weight: 700;">Výběrové řízení PM/BA</p>
+                <p style="text-transform: uppercase; letter-spacing: 4px; font-size: 1.2rem; font-weight: 700;">Výběrové řízení</p>
                 <h1>Digitální transformace<br>& Projekt EVA</h1>
-                <p style="font-size: 1.5rem; max-width: 600px;">Strategie pro Smart Metering, Služby výkonové rovnováhy a optimalizace spotřeby.</p>
-                <div style="margin-top: 3rem; font-size: 1.1rem;">
+                <p style="font-size: 1.8rem; font-weight: 400; opacity: 0.9;">Strategie pro Smart Metering, Služby výkonové rovnováhy a algoritmickou optimalizaci spotřeby.</p>
+                <div style="margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 2rem;">
                     <strong>Josef</strong><br>
-                    Kandidát na pozici Project Manager
+                    <span style="opacity: 0.8;">Kandidát na pozici Project Manager / Business Analyst</span>
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="1">
+        <!-- Slide 2: Agenda -->
+        <div class="slide" id="slide-1">
             <div class="slide-content">
                 <h2>Agenda prezentace</h2>
                 <div class="grid-2">
                     <div>
-                        <ul>
-                            <li style="font-size: 1.8rem; margin-bottom: 1.5rem;"><strong>01.</strong> Energetický trh & Role EG.D</li>
-                            <li style="font-size: 1.8rem; margin-bottom: 1.5rem;"><strong>02.</strong> Služby výkonové rovnováhy (SVR)</li>
-                            <li style="font-size: 1.8rem; margin-bottom: 1.5rem;"><strong>03.</strong> Case Study: Projekt EVA</li>
-                            <li style="font-size: 1.8rem; margin-bottom: 1.5rem;"><strong>04.</strong> Optimalizace a AI (Radixal Know-how)</li>
-                            <li style="font-size: 1.8rem; margin-bottom: 1.5rem;"><strong>05.</strong> Harmonogram & Budget</li>
+                        <ul style="font-weight: 500;">
+                            <li style="font-size: 2rem; margin-bottom: 2rem; color: var(--egd-red);"><strong>01.</strong> Energetický trh & Role EG.D</li>
+                            <li style="font-size: 2rem; margin-bottom: 2rem;"><strong>02.</strong> Služby výkonové rovnováhy (SVR)</li>
+                            <li style="font-size: 2rem; margin-bottom: 2rem;"><strong>03.</strong> Case Study: Projekt EVA</li>
+                            <li style="font-size: 2rem; margin-bottom: 2rem; color: var(--radixal-blue);"><strong>04.</strong> Optimalizace a AI (Radixal Know-how)</li>
+                            <li style="font-size: 2rem; margin-bottom: 2rem;"><strong>05.</strong> Harmonogram & Budget</li>
                         </ul>
                     </div>
-                    <div style="display:flex; justify-content:center;">
-                        <svg width="300" height="300" viewBox="0 0 200 200">
-                            <circle cx="100" cy="100" r="80" stroke="#E3000F" stroke-width="4" fill="none" opacity="0.1"/>
-                            <circle cx="100" cy="100" r="60" stroke="#E3000F" stroke-width="8" fill="none" stroke-dasharray="60 120" transform="rotate(45 100 100)"/>
-                            <circle cx="100" cy="100" r="40" fill="#E3000F" opacity="0.8"/>
-                        </svg>
+                    <div style="display:flex; justify-content:center; align-items:center;">
+                         <!-- Abstract EGD Graphic -->
+                        <div class="diagram-circle">
+                            <div class="diagram-inner">
+                                DISTRIBUCE<br>DATA<br>INOVACE
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="2">
+        <!-- Slide 3: Market Roles -->
+        <div class="slide" id="slide-2">
             <div class="slide-content">
                 <h2>Role na energetickém trhu</h2>
-                <p>Klíčové je rozlišení mezi správou infrastruktury a obchodem s komoditou.</p>
+                <p>Klíčové je rozlišení mezi <strong>správou infrastruktury</strong> a <strong>obchodem s komoditou</strong>.</p>
                 <div class="grid-2">
                     <div class="card">
+                        <span class="badge">REGULOVÁNO</span>
                         <h3 style="color:var(--egd-red)">EG.D (Distributor)</h3>
-                        <p><strong>Monopolní regulovaná činnost</strong></p>
+                        <p><strong>Zajištění fyzické dodávky</strong></p>
                         <ul>
                             <li>Vlastník "drátů" a <strong>elektroměrů</strong>.</li>
-                            <li>Zodpovědnost za stabilitu sítě.</li>
-                            <li>Data z měření (Smart Metering).</li>
-                            <li>Cena regulována ERÚ.</li>
+                            <li>Zodpovědnost za stabilitu a kvalitu sítě.</li>
+                            <li>Původce dat z měření (Smart Metering).</li>
+                            <li>Výnosy regulovány ERÚ (stálé platby).</li>
                         </ul>
                     </div>
-                    <div class="card" style="border-left-color: #555;">
+                    <div class="card" style="border-left-color: #333;">
+                        <span class="badge" style="background:#333">TRŽNÍ PROSTŘEDÍ</span>
                         <h3 style="color:var(--text-main)">Obchodník (např. E.ON)</h3>
-                        <p><strong>Tržní konkurence</strong></p>
+                        <p><strong>Prodej komodity (Elektřina)</strong></p>
                         <ul>
-                            <li>Nákup a prodej silové elektřiny.</li>
-                            <li>Fakturace koncovému zákazníkovi.</li>
-                            <li>Vytváření tarifů a produktů.</li>
-                            <li>Nemá přímý přístup k "drátům".</li>
+                            <li>Nákup na burze a prodej koncovým zákazníkům.</li>
+                            <li>Fakturace a zákaznický servis.</li>
+                            <li>Vytváření tarifů a produktových balíčků.</li>
+                            <li>Nemá přímou kontrolu nad fyzickou sítí.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="3">
+        <!-- Slide 4: SVR -->
+        <div class="slide" id="slide-3">
             <div class="slide-content">
                 <h2>Služby výkonové rovnováhy (SVR)</h2>
-                <p>Jak udržet 50 Hz v síti a jaká je role distributora?</p>
-                
-                <div style="margin-top: 2rem;">
-                    <div style="display:flex; gap: 2rem; margin-bottom: 2rem;">
-                        <div style="flex:1;">
-                            <h3>ČEPS (TSO)</h3>
-                            <p>Nakupuje a řídí SVR pro udržení rovnováhy (FCR, aFRR, mFRR).</p>
-                        </div>
-                        <div style="flex:1;">
-                            <h3 style="color:var(--egd-red)">EG.D (DSO)</h3>
-                            <p>Nenakupuje SVR, ale <strong>umožňuje</strong> jejich poskytování ("Semafor"). Ověřuje, zda aktivace nezpůsobí lokální přetížení.</p>
+                <div class="grid-2">
+                    <div>
+                        <p>SVR slouží k udržení frekvence 50 Hz v síti. Aktivují se v řádu sekund (FCR) až minut (aFRR, mFRR).</p>
+                        <div class="card" style="margin-top:2rem;">
+                             <h3 style="margin-bottom:0.5rem;">Role EG.D v SVR</h3>
+                             <p>EG.D služby <strong>nenakupuje</strong> (to dělá ČEPS), ale <strong>umožňuje</strong> jejich poskytování skrze "Semaforový systém".</p>
+                             <hr style="border:0; border-top:1px solid #ccc; margin:1rem 0;">
+                             <p style="font-size:1.1rem; color:#666;"><strong>Funkce Semafor:</strong> Ověřuje, zda aktivace flexibility v daném uzlu nezpůsobí lokální přetížení distribuční sítě.</p>
                         </div>
                     </div>
-                    
-                    <div class="card">
-                        <h3>Nový trend: Agregace flexibility</h3>
-                        <p>Díky <strong>Lex OZE II</strong> mohou domácnosti s FVE/baterií nabízet svou flexibilitu přes agregátora. Projekt EVA je technologickým předstupněm pro tento trh.</p>
+                    <div>
+                        <div class="card" style="background:#fff; border: 2px solid #eee;">
+                            <h3 style="color:var(--text-main)">Trend: Agregace flexibility</h3>
+                            <p>Díky <strong>Lex OZE II</strong> vznikají "Nezávislí agregátoři".</p>
+                            <ul>
+                                <li>Sdružují tisíce malých zdrojů (Domácí FVE, Baterie, Tepelná čerpadla).</li>
+                                <li>Nabízejí jejich souhrnný výkon jako jeden blok pro SVR.</li>
+                            </ul>
+                            <div style="background:var(--egd-red); padding:1.5rem; color:white; border-radius:8px; margin-top:2rem;">
+                                <strong>Implikace pro Projekt EVA:</strong><br>
+                                Aplikace není jen "ukazovátko", ale brána pro zapojení domácnosti do trhu s flexibilitou.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="4">
+        <!-- Slide 5: Project EVA -->
+        <div class="slide" id="slide-4">
             <div class="slide-content">
-                <h2>Projekt EVA: Smart Meter App</h2>
-                <p class="highlight">Cíl: Demokratizace dat o spotřebě v reálném čase.</p>
+                <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                    <h2>Projekt EVA: Smart Meter App</h2>
+                    <span style="font-size:2rem; font-weight:900; color:#ddd;">EVA PROJECT</span>
+                </div>
+                <p class="highlight-text">Strategický cíl: Demokratizace dat o spotřebě v reálném čase.</p>
                 
                 <div class="grid-2">
                     <div>
                         <h3>Technické řešení</h3>
-                        <ol>
-                            <li><strong>Smart Meter (EG.D):</strong> Rozhraní P1 / RS485.</li>
-                            <li><strong>Senzor (Edge):</strong> Čte data (protokol DLMS/COSEM).</li>
-                            <li><strong>Gateway:</strong> Posílá data přes Wi-Fi do cloudu.</li>
-                            <li><strong>Appka:</strong> Vizualizace pro B2C.</li>
-                        </ol>
+                        <div style="background:white; padding:2rem; border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.05); border:1px solid #eee;">
+                            <ol style="font-size:1.3rem; font-weight:500;">
+                                <li style="margin-bottom:1rem;"><strong>Smart Meter (EG.D)</strong> - Rozhraní P1 / RS485.</li>
+                                <li style="margin-bottom:1rem;"><strong>Senzor (Edge)</strong> - Čte data (protokol DLMS/COSEM).</li>
+                                <li style="margin-bottom:1rem;"><strong>Gateway & Cloud</strong> - MQTT komunikace přes domácí Wi-Fi.</li>
+                                <li><strong>Mobilní Appka</strong> - Vizualizace pro zákazníka (B2C).</li>
+                            </ol>
+                        </div>
                     </div>
                     <div>
-                        <h3>Přínosy</h3>
+                        <h3>Business Value</h3>
                         <ul>
-                            <li><strong>Zákazník:</strong> Okamžitý přehled, úspora 15-30 % díky změně chování.</li>
-                            <li><strong>EG.D:</strong> Digitalizace sítě na "poslední míli", příprava na flexibilitu, snížení nákladů na call centrum.</li>
+                            <li><strong>Pro Zákazníka:</strong> Okamžitý přehled, úspora 15–30 % identifikací "žroutů".</li>
+                            <li><strong>Pro EG.D:</strong> Sběr dat z "poslední míle", snížení hovorů na call centrum (dotazy na HDO), zvýšení zákaznické spokojenosti (NPS).</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="5">
+        <!-- Slide 6: AI & Optimization -->
+        <div class="slide" id="slide-5">
             <div class="slide-content">
                 <h2>Optimalizace a AI: Synergie s Radixal</h2>
-                <p>Zkušenosti z praxe (projekt pro E.ON, SolSol, Schlieger) ukazují, že pouhé <em>zobrazení</em> dat nestačí. Nutná je <em>akce</em>.</p>
+                <p>Pouhé <em>zobrazení</em> dat nestačí. Pro skutečnou hodnotu je nutná <em>akce a automatizace</em>.</p>
                 
                 <div class="grid-2">
-                    <div class="card" style="border-left-color: var(--radixal-blue);">
+                    <div class="card" style="background:#f0f8ff; border-left-color: var(--radixal-blue);">
                         <h3>1. Predikce (Machine Learning)</h3>
-                        <p>Využití historických dat a počasí pro přesnou předpověď spotřeby a výroby FVE na 24h dopředu.</p>
+                        <p>Predikujeme výrobu FVE (osvit) a spotřebu domácnosti na 24h dopředu.</p>
+                        <div style="font-size:0.9rem; margin-top:1rem; opacity:0.7;">Využití: Upozornění na anomálie, plánování.</div>
                     </div>
-                    <div class="card" style="border-left-color: var(--radixal-blue);">
+                    <div class="card" style="background:#e6f3ff; border-left-color: var(--radixal-blue);">
                         <h3>2. Optimalizace (GA & PSO)</h3>
-                        <p><strong>Genetické algoritmy & Particle Swarm Optimization:</strong><br>
-                        Nalezení optimálního plánu toku energií (nabít baterii vs. ohřát vodu vs. prodat do sítě) v milisekundách.</p>
+                        <p><strong>Genetické algoritmy & Particle Swarm Optimization</strong> hledají optimální rozvrh pro baterii a spotřebiče v milisekundách.</p>
+                        <div style="font-size:0.9rem; margin-top:1rem; opacity:0.7;">Reference: Implementováno v projektech pro Schlieger / SolSol</div>
                     </div>
-                </div>
-                <div style="margin-top: 2rem; font-size: 0.9em; color: #666;">
-                    * Tyto algoritmy byly úspěšně nasazeny v produkčním prostředí pro řízení lokálních instalací OZE.
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="6">
+        <!-- Slide 7: Timeline -->
+        <div class="slide" id="slide-6">
             <div class="slide-content">
-                <h2>Harmonogram realizace (12 měsíců)</h2>
+                <h2>Harmonogram Realizace (12 měsíců)</h2>
                 
-                <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
-                    <div style="display:flex; align-items:center;">
-                        <div style="width: 100px; font-weight:bold;">Q1</div>
-                        <div style="flex:1; background:#eee; height:40px; border-radius:4px; display:flex; align-items:center; padding-left:1rem;">
-                            <div style="width:30%; background:var(--egd-red); height:100%; border-radius:4px 0 0 4px;"></div>
-                            <span style="margin-left:1rem; font-size:0.9rem;">Specifikace HW, Výběr dodavatele, UX Design</span>
+                <div style="display:flex; flex-direction:column; gap:2rem; margin-top:2rem;">
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Q1</div>
+                        <div class="timeline-bar-bg">
+                            <div class="timeline-bar-fill" style="width:30%">Discovery & Specifikace</div>
                         </div>
+                        <div style="width: 200px; padding-left:1rem; font-size:0.9rem; color:#666;">Výběr dodavatele HW, UX Design</div>
                     </div>
-                    <div style="display:flex; align-items:center;">
-                        <div style="width: 100px; font-weight:bold;">Q2</div>
-                        <div style="flex:1; background:#eee; height:40px; border-radius:4px; display:flex; align-items:center; padding-left:1rem;">
-                            <div style="width:60%; background:var(--egd-red); height:100%; opacity:0.8; border-radius:4px 0 0 4px;"></div>
-                            <span style="margin-left:1rem; font-size:0.9rem;">Vývoj App & Backend (GA/PSO), Prototyp HW</span>
+
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Q2</div>
+                        <div class="timeline-bar-bg">
+                            <div class="timeline-bar-fill" style="width:55%; opacity:0.9;">Vývoj App & Backend (GA/PSO)</div>
                         </div>
+                        <div style="width: 200px; padding-left:1rem; font-size:0.9rem; color:#666;">Prototypy HW, Security Audit</div>
                     </div>
-                    <div style="display:flex; align-items:center;">
-                        <div style="width: 100px; font-weight:bold;">Q3</div>
-                        <div style="flex:1; background:#eee; height:40px; border-radius:4px; display:flex; align-items:center; padding-left:1rem;">
-                            <div style="width:80%; background:var(--egd-red); height:100%; opacity:0.6; border-radius:4px 0 0 4px;"></div>
-                            <span style="margin-left:1rem; font-size:0.9rem;">Pilotní provoz (100 userů), Ladění, Security testy</span>
+
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Q3</div>
+                        <div class="timeline-bar-bg">
+                            <div class="timeline-bar-fill" style="width:80%; opacity:0.8;">Pilotní provoz (100 uživatelů)</div>
                         </div>
+                        <div style="width: 200px; padding-left:1rem; font-size:0.9rem; color:#666;">User Testing, Ladění chyb</div>
                     </div>
-                    <div style="display:flex; align-items:center;">
-                        <div style="width: 100px; font-weight:bold;">Q4</div>
-                        <div style="flex:1; background:#eee; height:40px; border-radius:4px; display:flex; align-items:center; padding-left:1rem;">
-                            <div style="width:100%; background:#00A3E0; height:100%; border-radius:4px;"></div>
-                            <span style="margin-left:1rem; font-size:0.9rem; color:white; font-weight:bold;">Go-to-Market & Rollout</span>
+
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Q4</div>
+                        <div class="timeline-bar-bg">
+                            <div class="timeline-bar-fill" style="width:100%; background: #00A3E0;">Go-to-Market & Rollout</div>
                         </div>
+                        <div style="width: 200px; padding-left:1rem; font-size:0.9rem; color:#666;">Masová distribuce, Marketing</div>
                     </div>
+                    
                 </div>
             </div>
         </div>
 
-        <div class="slide" data-index="7">
+        <!-- Slide 8: Reference -->
+        <div class="slide" id="slide-7">
             <div class="slide-content">
                 <h2>Závěr a Reference</h2>
-                <p>Projekt EVA je strategickou investicí do budoucnosti sítě.</p>
-                
                 <div class="grid-2">
                     <div>
-                        <h3>Proč já?</h3>
+                        <p style="font-size:2rem; font-weight:bold; color:var(--text-main);">Projekt EVA je klíčem k digitální energetice.</p>
+                        <h3 style="margin-top:2rem;">Mé silné stránky</h3>
                         <ul>
                             <li>Zkušenost s řízením projektů v energetice.</li>
                             <li>Technický background (IoT, Data, Cloud).</li>
-                            <li>Znalost optimalizačních algoritmů (Radixal).</li>
+                            <li>Unikátní know-how optimalizačních algoritmů.</li>
                         </ul>
                     </div>
                     <div class="ref-box">
-                        <h3>Reference</h3>
-                        <p>Pro ověření mých zkušeností s vývojem energetických systémů a optimalizace kontaktujte:</p>
-                        <p><strong>Viktor Lošťák</strong><br>
-                        Jednatel, Radixal s.r.o.<br>
-                        <span style="font-size: 0.9em;">Spolupráce 2019 - 2025</span></p>
-                        <p style="font-size: 0.9em;">
-                            📞 +420 604 761 154<br>
-                            ✉️ viktor.lostak@radixal.net<br>
-                            🌐 www.radixal.net
-                        </p>
+                        <h3 style="margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:1px; font-size:1rem; color:var(--text-main);">Ověření Reference</h3>
+                        <p style="margin-bottom:1.5rem; font-size:1rem; color:#666;">Pro detailní referenci o mé práci na energetických systémech kontaktujte:</p>
+                        
+                        <div style="font-size:1.5rem; font-weight:800; color:var(--radixal-blue);">Viktor Lošťák</div>
+                        <div style="font-weight:500; color:#555;">Jednatel, Radixal s.r.o.</div>
+                        <div style="font-size:0.9rem; color:#888; margin-bottom:1.5rem;">Spolupráce 2019 - 2026</div>
+
+                        <div class="contact-row">
+                             <span style="font-weight:bold;">T:</span> +420 604 761 154
+                        </div>
+                        <div class="contact-row">
+                             <span style="font-weight:bold;">E:</span> viktor.lostak@radixal.net
+                        </div>
+                        <div class="contact-row">
+                             <span style="font-weight:bold;">W:</span> www.radixal.net
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
         <div class="progress-bar" id="progress"></div>
+    </div>
 
-        <div class="controls">
-            <button class="btn" onclick="prevSlide()">←</button>
-            <button class="btn" onclick="nextSlide()">→</button>
-        </div>
-
+    <!-- Navigation Controls -->
+    <div class="controls">
+        <button class="btn" onclick="prevSlide()" title="Předchozí">←</button>
+        <button class="btn" onclick="nextSlide()" title="Další">→</button>
     </div>
 
     <script>
@@ -477,12 +620,37 @@
         const totalSlides = slides.length;
 
         function updateSlide() {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides.classList.add('active');
+            // Remove active class from all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.classList.remove('prev');
+            });
+            
+            // Set active slide
+            slides[currentSlide].classList.add('active');
+
+            // Mark previous slides for transition direction if needed (optional enhancement)
+            for(let i=0; i < currentSlide; i++) {
+                slides[i].classList.add('prev');
+            }
             
             // Update progress bar
             const width = ((currentSlide + 1) / totalSlides) * 100;
             progressBar.style.width = width + '%';
+
+            // Check if title slide for different button styling
+            const controls = document.querySelectorAll('.btn');
+            if (currentSlide === 0) {
+                 controls.forEach(btn => {
+                     btn.style.background = 'rgba(255,255,255,0.2)';
+                     btn.style.color = 'white';
+                 });
+            } else {
+                 controls.forEach(btn => {
+                     btn.style.background = 'rgba(0,0,0,0.05)';
+                     btn.style.color = '#333';
+                 });
+            }
         }
 
         function nextSlide() {
@@ -507,6 +675,28 @@
                 prevSlide();
             }
         });
+
+        // Touch Navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
 
         // Initialize
         updateSlide();
