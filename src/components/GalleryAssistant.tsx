@@ -152,15 +152,20 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                     <h2 className="text-black font-serif text-2xl tracking-wide leading-none">
                         KARPUCHINA
                     </h2>
-                    <span className="text-[10px] text-stone-400 uppercase tracking-[0.2em] mt-1">
+                    <span className="text-[10px] text-stone-500 uppercase tracking-[0.2em] mt-1">
                         Gallery Intelligent Systems
                     </span>
                 </div>
             </div>
-            {/* Live Indicator - Subtle */}
-            <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span className="text-[10px] text-stone-400 uppercase tracking-widest font-medium">Online</span>
+            {/* Live Indicator & Demo Label */}
+            <div className="flex flex-col items-end gap-1">
+                 <div className="flex items-center gap-2 px-2 py-1 bg-stone-100 rounded text-xs font-bold tracking-widest text-stone-600 border border-stone-200">
+                    <span>DEMO PREVIEW</span>
+                 </div>
+                 <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-pulse"></div>
+                    <span className="text-[10px] text-stone-500 uppercase tracking-widest font-medium">System Online</span>
+                 </div>
             </div>
         </div>
 
@@ -212,7 +217,7 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                     {/* Status Section - Minimal */}
                     <div className="flex items-center justify-between">
                          <div className="flex flex-col">
-                             <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-2">Security Status</span>
+                             <span className="text-[10px] uppercase tracking-widest text-stone-500 mb-2">Security Status</span>
                              <div className="flex items-center gap-3">
                                  <ShieldCheck className="w-5 h-5 text-stone-800" />
                                  <span className="text-xl font-serif text-stone-900">Systems Nominal</span>
@@ -233,12 +238,12 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                         
                         <div className="grid grid-cols-2 gap-8">
                             <div>
-                                <span className="text-[10px] text-stone-400 uppercase tracking-widest block mb-1">Visitor</span>
+                                <span className="text-[10px] text-stone-500 uppercase tracking-widest block mb-1">Visitor</span>
                                 <span className="text-base text-stone-900 font-serif block">#428 (Male, Suit)</span>
                                 <span className="text-xs text-stone-500 mt-1 block">Sector B • 14m Dwell</span>
                             </div>
                             <div>
-                                <span className="text-[10px] text-stone-400 uppercase tracking-widest block mb-1">Profile</span>
+                                <span className="text-[10px] text-stone-500 uppercase tracking-widest block mb-1">Profile</span>
                                 <span className="text-base text-stone-900 font-serif block">INTJ / Analyst</span>
                                 <span className="text-xs text-stone-500 mt-1 block">High Net Worth (Est.)</span>
                             </div>
@@ -277,7 +282,7 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                                         </span>
                                         {v.incidents.length > 0 && <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />}
                                     </div>
-                                    <div className="flex items-center gap-2 text-[10px] text-stone-400 uppercase tracking-wider">
+                                    <div className="flex items-center gap-2 text-[10px] text-stone-500 uppercase tracking-wider">
                                         <span>{v.status === 'active' ? 'Active' : 'Left'}</span>
                                         <span className="w-px h-2 bg-stone-200" />
                                         <span>{v.dwellTime}</span>
@@ -292,7 +297,7 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                         {selectedVisitor ? (
                             <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
                                 <div>
-                                     <button onClick={() => setSelectedVisitorId(null)} className="md:hidden text-stone-400 text-xs uppercase tracking-widest mb-4">
+                                     <button onClick={() => setSelectedVisitorId(null)} className="md:hidden text-stone-500 text-xs uppercase tracking-widest mb-4">
                                          ← Back
                                      </button>
                                      <h2 className="text-2xl font-serif text-stone-900 mb-2">{selectedVisitor.name}</h2>
@@ -313,7 +318,7 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
 
                                 {/* History */}
                                 <div>
-                                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-4">Transcript</h4>
+                                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-4">Transcript</h4>
                                     <div className="space-y-4">
                                         {selectedVisitor.transcript.length > 0 ? selectedVisitor.transcript.map((line, i) => (
                                              <div key={i} className="flex gap-4 text-sm">
@@ -337,13 +342,13 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                         {/* PR Card 1 */}
                         <div className="group cursor-pointer">
                             <div className="flex justify-between items-baseline mb-4">
-                                 <span className="text-[10px] uppercase tracking-widest text-stone-400">Campaign Proposal</span>
-                                 <span className="text-[10px] uppercase tracking-widest text-stone-400">10:42 AM</span>
+                                 <span className="text-[10px] uppercase tracking-widest text-stone-500">Campaign Proposal</span>
+                                 <span className="text-[10px] uppercase tracking-widest text-stone-500">10:42 AM</span>
                             </div>
                             <h4 className="text-2xl font-serif text-stone-900 mb-4 group-hover:underline decoration-1 underline-offset-4">Re-evaluation: Filip Sklenář</h4>
                             
                             <div className="pl-4 border-l border-stone-200 space-y-4">
-                                <p className="text-sm text-stone-600 leading-relaxed max-w-md">
+                                <p className="text-sm text-stone-700 leading-relaxed max-w-md">
                                     <strong className="text-stone-900 block text-xs uppercase tracking-widest mb-1">Context</strong>
                                     Market value increased by 8% in Q3. Opportunity to re-engage 2021 buyers with valuation reports to build trust for new acquisitions.
                                 </p>
@@ -379,10 +384,10 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                         className={`text-sm leading-relaxed ${
                             msg.role === "model"
                             ? "text-stone-800"
-                            : "text-stone-500 text-right italic"
+                            : "text-stone-600 text-right italic"
                         }`}
                         >
-                            <span className="block text-[10px] uppercase tracking-widest text-stone-300 mb-2">{msg.role === 'model' ? 'Karpuchina AI' : 'Director'}</span>
+                            <span className="block text-[10px] uppercase tracking-widest text-stone-400 mb-2">{msg.role === 'model' ? 'Karpuchina AI' : 'Director'}</span>
                             {msg.text}
                         </div>
                     ))}
