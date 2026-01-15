@@ -455,9 +455,11 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                 <Send className="w-4 h-4" />
             </button>
             </div>
-             <p className="text-[10px] text-center text-white/20 mt-2">
-                 Artitalk Business Intelligence • Gemini 2.5 Flash
-              </p>
+             <div className="mt-4 text-[10px] text-stone-300 text-center space-y-1">
+                 <p>Powered by <strong className="text-stone-500">A VIRTÙ RESEARCH & TECHNOLOGIES s.r.o.</strong></p>
+                 <p className="text-stone-200">Legal Compliance & Data Protection Guaranteed</p>
+                 <p className="opacity-50">Kuršova 978/3, Brno • IČ 08428441 • avirtu.net</p>
+              </div>
         </div>
     </div>
   );

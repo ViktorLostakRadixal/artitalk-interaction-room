@@ -91,8 +91,9 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full max-w-2xl mx-auto relative pt-20 pb-24">
-       <div className="flex-1 overflow-y-auto px-4 space-y-4">
+    <div className="flex flex-col h-full w-full relative">
+       {/* Messages Area */}
+       <div className="flex-1 overflow-y-auto px-8 py-20 space-y-12 custom-scrollbar">
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div
@@ -100,21 +101,31 @@ export function ChatInterface() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className={clsx(
-                "p-4 rounded-2xl border backdrop-blur-sm max-w-[90%]",
-                AGENT_COLORS[msg.sender] || AGENT_COLORS.User,
+                "max-w-[85%]",
                 msg.sender === "User" ? "ml-auto text-right" : "mr-auto"
               )}
             >
-              <div className="flex flex-col gap-1">
-                 <span className="text-xs font-bold uppercase tracking-wider opacity-70 mb-1">
-                    {msg.sender === "System" ? "Rádio Artitalk" : msg.sender}
-                 </span>
-                 <p className="leading-relaxed text-sm md:text-base">
+              <div className="flex flex-col gap-2">
+                 <div className="flex items-center gap-3 mb-1">
+                    <span className={clsx(
+                        "text-[10px] font-bold uppercase tracking-[0.2em]",
+                        msg.sender === "User" ? "ml-auto text-stone-900" : "text-stone-400",
+                        msg.sender === "Petr" && "text-blue-600",
+                        msg.sender === "Ester" && "text-purple-600"
+                    )}>
+                        {msg.sender === "System" ? "• Station" : msg.sender}
+                    </span>
+                    <span className="text-[10px] text-stone-300">
+                        {msg.timestamp}
+                    </span>
+                 </div>
+                 
+                 <p className={clsx(
+                    "leading-relaxed text-lg break-words font-serif",
+                    msg.sender === "System" ? "text-stone-400 italic" : "text-stone-800"
+                 )}>
                     {msg.text}
                  </p>
-                 <span className="text-[10px] opacity-40 mt-1 block">
-                    {msg.timestamp}
-                 </span>
               </div>
             </motion.div>
           ))}
@@ -122,12 +133,12 @@ export function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area (Teletník) */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black to-transparent z-40">
-        <div className="max-w-2xl mx-auto flex items-end gap-2 bg-artitalk-panel border border-white/10 rounded-2xl p-2 shadow-2xl">
+      {/* Input Area - Minimalist */}
+      <div className="p-8 z-10 w-full max-w-2xl mx-auto">
+        <div className="relative">
            <textarea
-             className="flex-1 bg-transparent border-0 focus:ring-0 text-white placeholder-stone-500 resize-none max-h-32 min-h-[44px] py-3 px-2 text-sm md:text-base"
-             placeholder="Váš vzkaz do éteru..."
+             className="w-full bg-transparent border-b border-stone-200 focus:border-stone-900 text-stone-900 placeholder-stone-300 resize-none min-h-[44px] py-2 text-lg font-serif focus:outline-none transition-colors"
+             placeholder="Contribute to the dialogue..."
              rows={1}
              value={input}
              onChange={(e) => setInput(e.target.value)}
@@ -140,7 +151,7 @@ export function ChatInterface() {
            />
            <button 
              onClick={handleSend}
-             className="p-3 bg-artitalk-gold text-black rounded-xl hover:bg-yellow-400 transition-colors flex-shrink-0"
+             className="absolute right-0 bottom-3 text-stone-400 hover:text-stone-900 transition-colors"
            >
              <Send className="w-5 h-5" />
            </button>
