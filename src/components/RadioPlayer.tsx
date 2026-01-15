@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function RadioPlayer() {
   return (
-    <div className="fixed bottom-24 right-4 z-40 bg-black/80 backdrop-blur border border-artitalk-gold/20 rounded-full p-2 pr-4 flex items-center gap-3 shadow-2xl">
+    <div className="bg-black/80 backdrop-blur border border-artitalk-gold/20 rounded-full p-2 pr-4 flex items-center gap-3 shadow-2xl">
        <button className="w-10 h-10 rounded-full bg-artitalk-gold/10 flex items-center justify-center text-artitalk-gold border border-artitalk-gold/30 hover:bg-artitalk-gold/20 transition-all">
           <div className="w-3 h-3 bg-artitalk-gold rounded-sm" />
        </button>
