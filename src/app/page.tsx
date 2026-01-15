@@ -14,13 +14,13 @@ export default function Home() {
       {/* Split Layout: Dashboard (Left) | Interaction Room (Right) */}
       <div className="flex-1 relative z-10 flex flex-col md:flex-row pt-16 h-[calc(100vh-64px)] overflow-hidden">
           
-          {/* LEFT PANEL: Gallery Command Center (Priority View) */}
-          <div className="w-full md:w-[450px] lg:w-[500px] flex-shrink-0 z-20 bg-white shadow-[10px_0_30px_-5px_rgba(0,0,0,0.02)]">
+          {/* LEFT PANEL: Gallery Command Center (MAIN VIEW) */}
+          <div className="flex-1 z-20 bg-white shadow-[10px_0_30px_-5px_rgba(0,0,0,0.02)] min-w-0">
                <GalleryAssistant className="h-full w-full" />
           </div>
 
-          {/* RIGHT PANEL: Live Feed / Room Visualization */}
-          <div className="flex-1 relative bg-[#F7F7F6] flex flex-col">
+          {/* RIGHT PANEL: Live Feed (SIDEBAR) */}
+          <div className="w-full md:w-[400px] xl:w-[450px] relative bg-[#F7F7F6] flex flex-col border-l border-stone-100">
               <div className="absolute top-6 left-8 z-10">
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
                     Live Feed • Public Space

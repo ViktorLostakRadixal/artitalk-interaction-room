@@ -133,324 +133,270 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
   const selectedVisitor = selectedVisitorId ? MOCK_VISITORS.find(v => v.id === selectedVisitorId) : null;
 
   return (
-    <div className={clsx("flex flex-col h-full bg-[#0F0F0F] border-r border-white/5", className)}>
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/20">
-            <div className="flex items-center gap-3">
-            {/* Karpuchina Fish Logo (Symbolic) */}
-            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5 text-black" strokeWidth="2">
-                    <path d="M6.5 12c.5-2 2-3.5 4-4 2 .5 3.5 2 4 4-2 2-3.5 3.5-5.5 3-2-.5-2.5-2-2.5-3z" />
-                    <path d="M16 12c-1.5 1-3 1.5-4.5 1S9 12 9 12" />
-                    <path d="M20 12l-2-2m2 2l-2 2" />
-                    <circle cx="9" cy="11.5" r="0.5" fill="black" />
-                 </svg>
+    <div className={clsx("flex flex-col h-full bg-white text-stone-900 font-sans", className)}>
+        {/* Header - Minimalist, Airy */}
+        <div className="px-8 py-8 flex items-center justify-between bg-white">
+            <div className="flex items-center gap-4">
+            {/* Karpuchina Fish Logo (Clean) */}
+                <div className="w-10 h-10 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-8 h-8 text-black" strokeWidth="1.5">
+                        <path d="M6.5 12c.5-2 2-3.5 4-4 2 .5 3.5 2 4 4-2 2-3.5 3.5-5.5 3-2-.5-2.5-2-2.5-3z" />
+                        <path d="M16 12c-1.5 1-3 1.5-4.5 1S9 12 9 12" />
+                        <path d="M20 12l-2-2m2 2l-2 2" />
+                        <circle cx="9" cy="11.5" r="0.5" fill="black" />
+                    </svg>
+                </div>
+                <div className="flex flex-col">
+                    <h2 className="text-black font-serif text-2xl tracking-wide leading-none">
+                        KARPUCHINA
+                    </h2>
+                    <span className="text-[10px] text-stone-400 uppercase tracking-[0.2em] mt-1">
+                        Gallery Intelligent Systems
+                    </span>
+                </div>
             </div>
-            <div>
-                <h2 className="text-white font-serif text-lg tracking-wide leading-none">
-                    KARPUCHINA
-                </h2>
-                <span className="text-[10px] text-stone-500 uppercase tracking-widest block mt-1">
-                    GALLERY | RYBNÁ 9
-                </span>
-            </div>
-            </div>
-            {/* Live Indicator */}
+            {/* Live Indicator - Subtle */}
             <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-[10px] text-green-500 uppercase tracking-widest font-bold">System Online</span>
+                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span className="text-[10px] text-stone-400 uppercase tracking-widest font-medium">Online</span>
             </div>
         </div>
 
-        {/* View Switcher */}
-            <div className="flex px-6 pt-4 gap-4 text-xs md:text-sm font-medium border-b border-white/5 pb-0 overflow-x-auto">
+        {/* View Switcher - Tabless, just text */}
+        <div className="px-8 pb-4 flex gap-8 text-sm font-medium border-b border-stone-100 overflow-x-auto">
             <button 
                 onClick={() => setView("dashboard")}
-                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'dashboard' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+                className={`pb-4 transition-colors relative whitespace-nowrap ${view === 'dashboard' ? 'text-black' : 'text-stone-400 hover:text-stone-600'}`}
             >
-                Přehled
+                Overview
+                {view === 'dashboard' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-black" />}
             </button>
             <button 
                 onClick={() => setView("crm")}
-                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'crm' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+                className={`pb-4 transition-colors relative flex items-center gap-2 whitespace-nowrap ${view === 'crm' ? 'text-black' : 'text-stone-400 hover:text-stone-600'}`}
             >
-                Návštěvníci (CRM) <span className="ml-1 text-[10px] bg-red-500/20 text-red-500 px-1 rounded-full font-bold self-center border border-red-500/20">!</span>
+                Visitors
+                {view === 'crm' && <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />}
+                {view === 'crm' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-black" />}
             </button>
              <button 
                 onClick={() => setView("pr")}
-                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'pr' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+                className={`pb-4 transition-colors relative whitespace-nowrap ${view === 'pr' ? 'text-black' : 'text-stone-400 hover:text-stone-600'}`}
             >
-                PR & Marketing
+                Campaigns
+                 {view === 'pr' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-black" />}
             </button>
             <button 
                 onClick={() => setView("chat")}
-                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'chat' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+                className={`pb-4 transition-colors relative whitespace-nowrap ${view === 'chat' ? 'text-black' : 'text-stone-400 hover:text-stone-600'}`}
             >
-                AI Konzultant
+                Consultant
+                 {view === 'chat' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-black" />}
             </button>
-            </div>
+        </div>
 
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto bg-black/20 custom-scrollbar">
+        {/* Content Area - Clean White */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
             {view === "dashboard" ? (
-                <div className="p-6 space-y-6">
-                    {/* Status Card */}
-                    <div className="p-4 rounded-xl bg-gradient-to-br from-green-900/10 to-transparent border border-green-500/10 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                            <div className="p-2 bg-green-500/10 rounded-lg">
-                                <ShieldCheck className="w-5 h-5 text-green-500" />
-                            </div>
-                            <div>
-                                <h3 className="text-sm text-green-400 font-bold uppercase tracking-wider">Bezpečnostní Status</h3>
-                                <p className="text-xs text-stone-400">Všechny systémy online. Prostor zajištěn.</p>
-                            </div>
-                            </div>
+                <div className="space-y-12">
+                    {/* Status Section - Minimal */}
+                    <div className="flex items-center justify-between">
+                         <div className="flex flex-col">
+                             <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-2">Security Status</span>
+                             <div className="flex items-center gap-3">
+                                 <ShieldCheck className="w-5 h-5 text-stone-800" />
+                                 <span className="text-xl font-serif text-stone-900">Systems Nominal</span>
+                             </div>
+                         </div>
+                         <div className="text-right">
+                              <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-2">Space Capacity</span>
+                              <div className="text-xl font-serif text-stone-900">12 / 40</div>
+                         </div>
                     </div>
 
-                    {/* Revenue Opportunity */}
-                    <div className="p-4 rounded-xl bg-gradient-to-b from-artitalk-gold/20 to-transparent border border-artitalk-gold/30 shadow-lg shadow-artitalk-gold/5">
-                            <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 bg-artitalk-gold/10 rounded-lg">
-                                <TrendingUp className="w-6 h-6 text-artitalk-gold" />
+                    {/* Opportunity - Clean Card */}
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between border-b border-stone-100 pb-2">
+                             <h3 className="text-sm font-bold uppercase tracking-widest text-stone-900">Priority Opportunity</h3>
+                             <span className="bg-stone-100 text-stone-600 px-2 py-1 text-[10px] tracking-wide uppercase">Match 94%</span>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-8">
+                            <div>
+                                <span className="text-[10px] text-stone-400 uppercase tracking-widest block mb-1">Visitor</span>
+                                <span className="text-base text-stone-900 font-serif block">#428 (Male, Suit)</span>
+                                <span className="text-xs text-stone-500 mt-1 block">Sector B • 14m Dwell</span>
                             </div>
-                            <h3 className="text-base text-artitalk-gold font-bold uppercase tracking-wider">Prioritní Obchodní Cíl</h3>
+                            <div>
+                                <span className="text-[10px] text-stone-400 uppercase tracking-widest block mb-1">Profile</span>
+                                <span className="text-base text-stone-900 font-serif block">INTJ / Analyst</span>
+                                <span className="text-xs text-stone-500 mt-1 block">High Net Worth (Est.)</span>
                             </div>
-                            <div className="space-y-4">
-                            <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                                <span className="text-white font-bold">Návštěvník #428 (Muž, Sako)</span>
-                                <span className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded textxs font-mono font-bold">94% MATCH</span>
-                            </div>
-                            
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                                <div className="bg-white/5 p-2 rounded">
-                                    <span className="text-stone-500 block mb-1">Psychologický Profil</span>
-                                    <span className="text-white font-bold">INTJ / Analytik</span>
-                                </div>
-                                <div className="bg-white/5 p-2 rounded">
-                                    <span className="text-stone-500 block mb-1">Kupní Síla</span>
-                                    <span className="text-white font-bold">Vysoká (Est.)</span>
-                                </div>
-                            </div>
+                        </div>
 
-                            <div className="bg-artitalk-gold/5 border border-artitalk-gold/10 p-3 rounded text-sm text-stone-300 leading-relaxed">
-                                <strong className="text-artitalk-gold block mb-1">Doporučená Akce:</strong>
-                                Zastavil se 3x u obrazu "Red Cube". Neoslovovat emocionálně. Přistoupit s katalogem a zmínit investiční růst autora (+12% p.a.).
-                            </div>
-                            
-                            <button className="w-full py-2 bg-artitalk-gold hover:bg-yellow-400 text-black font-bold uppercase tracking-wide text-xs rounded transition-colors">
-                                Generovat Nabídku (PDF)
-                            </button>
-                            </div>
+                        <div className="bg-stone-50 p-6">
+                            <p className="text-sm text-stone-600 leading-loose">
+                                <strong className="text-stone-900 mr-2">Strategy:</strong>
+                                Do not approach emotionally. Present <strong>investment data</strong> regarding Lukáč's growth (+12% p.a.).
+                            </p>
+                        </div>
+                        
+                        <button className="w-full py-4 border border-stone-200 text-stone-900 text-xs font-bold uppercase tracking-widest hover:bg-stone-900 hover:text-white transition-all">
+                            Generate Offer PDF
+                        </button>
                     </div>
                 </div>
             ) : view === "crm" ? (
-                 <div className="flex h-full">
-                    {/* Visitor List */}
-                    <div className={`${selectedVisitorId ? 'hidden md:block w-1/3' : 'w-full'} border-r border-white/5 overflow-y-auto`}>
-                        <div className="p-4 sticky top-0 bg-[#0F0F0F] z-10 border-b border-white/5">
-                             <div className="relative">
-                                <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                                <input className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-3 py-2 text-xs text-white" placeholder="Hledat návštěvníka..." />
-                             </div>
-                        </div>
-                        <div className="divide-y divide-white/5">
+                 <div className="flex h-full gap-8">
+                    {/* Visitor List - Clean */}
+                    <div className={`flex-1 ${selectedVisitorId ? 'hidden md:block' : ''}`}>
+                         <div className="mb-6 relative">
+                            <Search className="w-4 h-4 text-stone-400 absolute left-0 top-1/2 -translate-y-1/2" />
+                            <input className="w-full bg-transparent border-b border-stone-200 pl-8 pr-3 py-2 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:border-stone-900 transition-colors font-serif" placeholder="Search database..." />
+                         </div>
+                        <div className="space-y-1">
                             {MOCK_VISITORS.map(v => (
                                 <button 
                                     key={v.id}
                                     onClick={() => setSelectedVisitorId(v.id)}
-                                    className={`w-full text-left p-4 hover:bg-white/5 transition-colors ${selectedVisitorId === v.id ? 'bg-white/5 border-l-2 border-artitalk-gold' : ''}`}
+                                    className={`w-full text-left p-4 hover:bg-stone-50 transition-all group ${selectedVisitorId === v.id ? 'bg-stone-50' : ''}`}
                                 >
-                                    <div className="flex justify-between items-start mb-1">
-                                        <span className={`text-xs font-bold ${v.incidents.length > 0 ? 'text-red-400' : 'text-white'}`}>
+                                    <div className="flex justify-between items-center mb-1">
+                                        <span className={`text-sm font-serif ${v.incidents.length > 0 ? 'text-red-600' : 'text-stone-900'}`}>
                                             {v.name}
                                         </span>
-                                        {v.incidents.length > 0 && <AlertTriangle className="w-3 h-3 text-red-500" />}
+                                        {v.incidents.length > 0 && <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />}
                                     </div>
-                                    <div className="flex items-center gap-2 text-[10px] text-stone-500">
-                                        <span className={`w-1.5 h-1.5 rounded-full ${v.status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                                        {v.status === 'active' ? 'V prostoru' : 'Odešel'} • {v.dwellTime}
+                                    <div className="flex items-center gap-2 text-[10px] text-stone-400 uppercase tracking-wider">
+                                        <span>{v.status === 'active' ? 'Active' : 'Left'}</span>
+                                        <span className="w-px h-2 bg-stone-200" />
+                                        <span>{v.dwellTime}</span>
                                     </div>
-                                    <p className="text-[10px] text-stone-400 mt-2 truncate w-full">
-                                        {v.profile}
-                                    </p>
                                 </button>
                             ))}
                         </div>
                     </div>
 
-                    {/* Detail View */}
-                    <div className={`${selectedVisitorId ? 'w-full md:w-2/3' : 'hidden'} bg-black/10 overflow-y-auto`}>
+                    {/* Detail View - Minimal */}
+                    <div className={`${selectedVisitorId ? 'flex-1' : 'hidden'} border-l border-stone-100 pl-8`}>
                         {selectedVisitor ? (
-                            <div>
-                                {/* Detail Header */}
-                                <div className="p-6 border-b border-white/5 flex justify-between items-start">
-                                    <div>
-                                         <div className="flex items-center gap-2 mb-2">
-                                            <button onClick={() => setSelectedVisitorId(null)} className="md:hidden text-stone-500 mr-2">
-                                                ← Zpět
-                                            </button>
-                                            <h2 className="text-xl font-serif text-white">{selectedVisitor.name}</h2>
-                                             {selectedVisitor.incidents.length > 0 && 
-                                                <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/20 text-red-400 text-[10px] font-bold uppercase rounded">Incident Detected</span>
-                                             }
-                                         </div>
-                                         <div className="flex gap-4 text-xs text-stone-400">
-                                            <span>Poslední výskyt: <b className="text-white">{selectedVisitor.lastSeen}</b></span>
-                                            <span>Profil: <b className="text-artitalk-gold">{selectedVisitor.profile}</b></span>
-                                         </div>
-                                    </div>
+                            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                                <div>
+                                     <button onClick={() => setSelectedVisitorId(null)} className="md:hidden text-stone-400 text-xs uppercase tracking-widest mb-4">
+                                         ← Back
+                                     </button>
+                                     <h2 className="text-2xl font-serif text-stone-900 mb-2">{selectedVisitor.name}</h2>
+                                     <div className="flex gap-4 text-xs text-stone-500">
+                                        <span className="bg-stone-100 px-2 py-1 text-stone-900 uppercase tracking-wider text-[10px]">{selectedVisitor.profile}</span>
+                                        {selectedVisitor.incidents.length > 0 && <span className="text-red-600 font-bold uppercase tracking-wider flex items-center gap-1"><AlertTriangle className="w-3 h-3"/> Incident</span>}
+                                     </div>
                                 </div>
                                 
-                                {/* Evidence Gallery */}
-                                <div className="p-6 border-b border-white/5">
-                                    <h4 className="text-xs font-bold uppercase text-stone-500 mb-3 flex items-center gap-2">
-                                        <Camera className="w-3 h-3" /> Vizualizace kamer
-                                    </h4>
-                                    <div className="grid grid-cols-2 gap-2">
-                                        <div className="bg-white/5 aspect-video rounded flex items-center justify-center border border-white/10 uppercase text-[10px] text-stone-500">
-                                            Kamera 1 - Vstup (14:02)
-                                        </div>
-                                         <div className="bg-white/5 aspect-video rounded flex items-center justify-center border border-white/10 uppercase text-[10px] text-stone-500">
-                                            Kamera 3 - Sektor B (14:10)
-                                        </div>
+                                {/* Evidence */}
+                                <div>
+                                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-4">Visual Evidence</h4>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="bg-stone-100 aspect-video flex items-center justify-center text-[10px] text-stone-400 uppercase">Input Cam 01</div>
+                                        <div className="bg-stone-100 aspect-video flex items-center justify-center text-[10px] text-stone-400 uppercase">Sector B Cam</div>
                                     </div>
                                 </div>
 
-                                {/* Incidents & History */}
-                                <div className="p-6 space-y-6">
-                                    {selectedVisitor.incidents.length > 0 && (
-                                        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-                                            <h4 className="text-red-400 font-bold text-xs uppercase mb-2 flex items-center gap-2">
-                                                <AlertTriangle className="w-4 h-4" /> Aktivní Incidenty
-                                            </h4>
-                                            <ul className="space-y-1">
-                                                {selectedVisitor.incidents.map((inc, i) => (
-                                                    <li key={i} className="text-sm text-white">• {inc}</li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    )}
-
-                                    <div>
-                                         <h4 className="text-xs font-bold uppercase text-stone-500 mb-3 flex items-center gap-2">
-                                            <MessageSquare className="w-3 h-3" /> Přepis interakce s Artitalkem
-                                        </h4>
-                                        <div className="bg-white/5 rounded-xl p-4 space-y-2 text-sm text-stone-300 font-mono">
-                                            {selectedVisitor.transcript.length > 0 ? selectedVisitor.transcript.map((line, i) => (
-                                                <p key={i}><span className="text-white/30 text-[10px] mr-2">14:{10+i}</span> "{line}"</p>
-                                            )) : <p className="italic text-white/20">Žádná verbální interakce.</p>}
-                                        </div>
+                                {/* History */}
+                                <div>
+                                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-4">Transcript</h4>
+                                    <div className="space-y-4">
+                                        {selectedVisitor.transcript.length > 0 ? selectedVisitor.transcript.map((line, i) => (
+                                             <div key={i} className="flex gap-4 text-sm">
+                                                 <span className="text-stone-300 font-mono text-xs w-8">14:{10+i}</span>
+                                                 <p className="text-stone-600 italic">"{line}"</p>
+                                             </div>
+                                        )) : <p className="text-stone-300 text-xs italic">No verbal interaction recorded.</p>}
                                     </div>
-                                    
-                                     {selectedVisitor.associates.length > 0 && (
-                                         <div>
-                                            <h4 className="text-xs font-bold uppercase text-stone-500 mb-3 flex items-center gap-2">
-                                                <Users className="w-3 h-3" /> Doprovod (Social Graph)
-                                            </h4>
-                                            <div className="flex gap-2">
-                                                {selectedVisitor.associates.map(assocId => {
-                                                    const assoc = MOCK_VISITORS.find(v => v.id === assocId);
-                                                    return assoc ? (
-                                                        <div key={assocId} className="flex items-center gap-2 bg-white/5 rounded px-3 py-2 border border-white/10 cursor-pointer hover:bg-white/10" onClick={() => setSelectedVisitorId(assocId)}>
-                                                            <div className="w-6 h-6 rounded-full bg-stone-700 flex items-center justify-center text-[10px] text-white font-bold">{assoc.name[0]}</div>
-                                                            <span className="text-xs text-white">{assoc.name}</span>
-                                                        </div>
-                                                    ) : null;
-                                                })}
-                                            </div>
-                                         </div>
-                                     )}
                                 </div>
-
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center justify-center h-full text-stone-500">
-                                <User className="w-12 h-12 mb-4 opacity-20" />
-                                <p className="text-sm">Vyberte návštěvníka pro detail</p>
+                            <div className="flex items-center justify-center h-full text-stone-300 text-sm uppercase tracking-widest">
+                                Select Visitor
                             </div>
                         )}
                     </div>
                  </div>
             ) : view === "pr" ? (
-                <div className="p-6 space-y-6">
-                     <div className="space-y-2">
-                        <h3 className="text-stone-400 text-xs font-bold uppercase tracking-wider">Navrhované Kampaně</h3>
-                        
+                <div className="space-y-12">
+                     <div className="space-y-8">
                         {/* PR Card 1 */}
-                        <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-artitalk-gold/30 transition-colors">
-                            <div className="p-4 border-b border-white/5 bg-white/5">
-                                <div className="flex justify-between items-start mb-2">
-                                     <span className="text-xs font-bold bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">Newsletter / VIP</span>
-                                     <span className="text-[10px] text-stone-500">Dnes, 10:42</span>
-                                </div>
-                                <h4 className="text-white font-serif tracking-wide text-lg">Reevaluace sbírky: Filip Sklenář</h4>
+                        <div className="group cursor-pointer">
+                            <div className="flex justify-between items-baseline mb-4">
+                                 <span className="text-[10px] uppercase tracking-widest text-stone-400">Campaign Proposal</span>
+                                 <span className="text-[10px] uppercase tracking-widest text-stone-400">10:42 AM</span>
                             </div>
-                            <div className="p-4 space-y-4">
-                                <div>
-                                    <span className="text-[10px] uppercase text-artitalk-gold font-bold block mb-1">Strategický Kontext (Why This? Why Now?)</span>
-                                    <p className="text-sm text-stone-300 leading-relaxed">
-                                        Tržní hodnota Sklenářových děl stoupla o 8% za Q3. Klienti, kteří nakoupili v roce 2021, nyní "sedí" na zisku. 
-                                        Oslovením s propočtem zhodnocení posílíme důvěru a otevřeme dveře pro nákup novějších, dražších děl.
-                                    </p>
+                            <h4 className="text-2xl font-serif text-stone-900 mb-4 group-hover:underline decoration-1 underline-offset-4">Re-evaluation: Filip Sklenář</h4>
+                            
+                            <div className="pl-4 border-l border-stone-200 space-y-4">
+                                <p className="text-sm text-stone-600 leading-relaxed max-w-md">
+                                    <strong className="text-stone-900 block text-xs uppercase tracking-widest mb-1">Context</strong>
+                                    Market value increased by 8% in Q3. Opportunity to re-engage 2021 buyers with valuation reports to build trust for new acquisitions.
+                                </p>
+                                <div className="bg-stone-50 p-6 font-serif text-stone-800 text-sm leading-relaxed border border-stone-100">
+                                    Subject: Investment Update: Filip Sklenář<br/><br/>
+                                    Dear Client,<br/>
+                                    We are pleased to share the latest valuation report...
                                 </div>
-                                <div className="bg-black/40 p-3 rounded border border-white/5 text-xs text-stone-400 font-mono">
-                                    Předmět: Vaše investice do díla Filipa Sklenáře<br/><br/>
-                                    Vážený kliente,<br/>
-                                    dovoluji si Vám zaslat aktuální valuaci...
-                                </div>
-                                <div className="flex gap-2 pt-2">
-                                    <button className="flex-1 py-2 bg-artitalk-gold text-black font-bold uppercase text-xs rounded hover:bg-yellow-400 transition-colors">
-                                        Schválit a Odeslat
-                                    </button>
-                                    <button className="px-3 py-2 bg-white/10 text-white font-bold uppercase text-xs rounded hover:bg-white/20 transition-colors">
-                                        Upravit
-                                    </button>
-                                </div>
+                            </div>
+                            
+                            <div className="flex gap-4 mt-6">
+                                <button className="px-6 py-3 bg-stone-900 text-white text-xs font-bold uppercase tracking-widest hover:bg-black transition-all">
+                                    Approve & Send
+                                </button>
+                                <button className="px-6 py-3 border border-stone-200 text-stone-900 text-xs font-bold uppercase tracking-widest hover:bg-stone-50 transition-all">
+                                    Edit
+                                </button>
                             </div>
                         </div>
                      </div>
                 </div>
             ) : (
-                <div className="p-4 space-y-4">
+                <div className="space-y-8 max-w-xl mx-auto">
                     {messages.map((msg, idx) => (
                         <div
                         key={idx}
-                        className={`p-4 rounded-xl text-sm leading-relaxed max-w-[90%] border ${
+                        className={`text-sm leading-relaxed ${
                             msg.role === "model"
-                            ? "bg-artitalk-panel border-artitalk-gold/10 text-stone-200 mr-auto"
-                            : "bg-white/10 border-white/5 text-white ml-auto"
+                            ? "text-stone-800"
+                            : "text-stone-500 text-right italic"
                         }`}
                         >
-                        {msg.text}
+                            <span className="block text-[10px] uppercase tracking-widest text-stone-300 mb-2">{msg.role === 'model' ? 'Karpuchina AI' : 'Director'}</span>
+                            {msg.text}
                         </div>
                     ))}
                         {isLoading && (
-                        <div className="flex gap-1 p-4">
-                            <span className="w-2 h-2 bg-artitalk-gold rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                            <span className="w-2 h-2 bg-artitalk-gold rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                            <span className="w-2 h-2 bg-artitalk-gold rounded-full animate-bounce"></span>
+                        <div className="flex gap-1 justify-center py-4 opacity-20">
+                            <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                            <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                            <span className="w-1.5 h-1.5 bg-black rounded-full animate-bounce"></span>
                         </div>
                     )}
                 </div>
             )}
         </div>
 
-        {/* Input Area */}
-        <div className="p-4 bg-black/50 border-t border-white/10">
-            <div className="flex gap-2">
+        {/* Input Area - Clean Line */}
+        <div className="p-8 bg-white border-t border-stone-50 md:border-t-0">
+            <div className="relative">
             <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Zadejte pokyn pro asistenta..."
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:ring-1 focus:ring-artitalk-gold focus:outline-none"
+                placeholder="Type your command..."
+                className="w-full bg-transparent border-b border-stone-200 py-3 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:border-stone-900 transition-colors font-serif"
             />
             <button
                 onClick={handleSend}
                 disabled={isLoading}
-                className="p-3 bg-artitalk-gold text-black rounded-lg hover:bg-yellow-400 disabled:opacity-50 transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-900 transition-colors"
             >
                 <Send className="w-4 h-4" />
             </button>
