@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Sparkles, Send, X, Bot, TrendingUp, ShieldCheck, Users, AlertTriangle, Search, Clock, Camera, MessageSquare, ChevronRight, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
+import ReactMarkdown from "react-markdown";
 
 import { ChatInterface } from "./ChatInterface";
 
@@ -393,7 +394,20 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                         }`}
                         >
                             <span className="block text-[10px] uppercase tracking-widest text-stone-400 mb-2">{msg.role === 'model' ? 'Karpuchina AI' : 'Director'}</span>
-                            {msg.text}
+                            {msg.role === 'model' ? (
+                                <ReactMarkdown 
+                                    components={{
+                                        strong: ({node, ...props}) => <span className="font-bold text-stone-900" {...props} />,
+                                        ul: ({node, ...props}) => <ul className="list-disc pl-4 space-y-1 mt-2 mb-2" {...props} />,
+                                        li: ({node, ...props}) => <li className="text-stone-700" {...props} />,
+                                        p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />
+                                    }}
+                                >
+                                    {msg.text}
+                                </ReactMarkdown>
+                            ) : (
+                                msg.text
+                            )}
                         </div>
                     ))}
                         {isLoading && (
