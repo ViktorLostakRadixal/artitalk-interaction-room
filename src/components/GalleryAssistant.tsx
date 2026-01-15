@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Send, X, Bot, TrendingUp, ShieldCheck, Users } from "lucide-react";
+import { Sparkles, Send, X, Bot, TrendingUp, ShieldCheck, Users, AlertTriangle, Search, Clock, Camera, MessageSquare, ChevronRight, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 
@@ -9,13 +9,85 @@ interface GalleryAssistantProps {
     className?: string;
 }
 
+// Mock Data Types
+interface Visitor {
+  id: string;
+  name: string; // Often descriptive like "Muž v šedém kabátě"
+  status: "active" | "left" | "returning";
+  risk: "low" | "medium" | "high";
+  profile: string; // MBTI / Sales Profile
+  lastSeen: string;
+  dwellTime: string;
+  incidents: string[];
+  associates: string[]; // IDs of people they came with
+  transcript: string[]; // Snippets of conversation
+  photoUrl: string; // Placeholder for now
+}
+
+const MOCK_VISITORS: Visitor[] = [
+    {
+        id: "428",
+        name: "Návštěvník #428 (Muž, Sako)",
+        status: "active",
+        risk: "low",
+        profile: "INTJ (Analytik) - High Net Worth",
+        lastSeen: "Sektor B (Red Cube)",
+        dwellTime: "14m",
+        incidents: [],
+        associates: [],
+        transcript: ["Kolik stojí ten Sklenář?", "Je to olej nebo akryl?", "Hmm, zajímavá textura."],
+        photoUrl: "/api/placeholder/400/320"
+    },
+    {
+        id: "430",
+        name: "Návštěvník #430 (Žena s batohem)",
+        status: "active",
+        risk: "medium",
+        profile: "ISFP (Umělec) - Student?",
+        lastSeen: "Sektor A (Vstup)",
+        dwellTime: "3m",
+        incidents: ["Proximity Alert (Sektor A) - Příliš blízko plátna"],
+        associates: ["431"],
+        transcript: ["To je hustý.", "Hele koukej na to."],
+        photoUrl: "/api/placeholder/400/320"
+    },
+    {
+        id: "431",
+        name: "Návštěvník #431 (Muž, Kapuce)",
+        status: "active",
+        risk: "low",
+        profile: "Neznámý / Doprovod",
+        lastSeen: "Sektor A (Vstup)",
+        dwellTime: "3m",
+        incidents: [],
+        associates: ["430"],
+        transcript: [],
+        photoUrl: "/api/placeholder/400/320"
+    },
+    {
+        id: "422",
+        name: "Návštěvník #422 (Pár, Senior)",
+        status: "left",
+        risk: "low",
+        profile: "Sběratelé (Historie nákupů)",
+        lastSeen: "Odešli 14:20",
+        dwellTime: "45m",
+        incidents: [],
+        associates: [],
+        transcript: ["Máme zájem o katalog.", "Děkujeme."],
+        photoUrl: "/api/placeholder/400/320"
+    }
+];
+
 export function GalleryAssistant({ className }: GalleryAssistantProps) {
   const [input, setInput] = useState("");
-  const [view, setView] = useState<"dashboard" | "chat" | "pr">("dashboard");
+  const [view, setView] = useState<"dashboard" | "chat" | "pr" | "crm">("dashboard");
+  const [selectedVisitorId, setSelectedVisitorId] = useState<string | null>(null);
+  
   const [messages, setMessages] = useState<Array<{ role: string; text: string }>>([
     {
       role: "model",
-      text: "Viktore, situace je stabilní. Mám připravený PR návrh pro segment 'Architekti'.",
+      text: "Viktore, situace je stabilní. Mám připravený PR návrh pro segment 'Architekti'. U vstupu detekuji drobný incident (Visitor #430).",
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,6 +130,8 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
     }
   };
 
+  const selectedVisitor = selectedVisitorId ? MOCK_VISITORS.find(v => v.id === selectedVisitorId) : null;
+
   return (
     <div className={clsx("flex flex-col h-full bg-[#0F0F0F] border-r border-white/5", className)}>
         {/* Header */}
@@ -97,10 +171,16 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                 Přehled
             </button>
             <button 
+                onClick={() => setView("crm")}
+                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'crm' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+            >
+                Návštěvníci (CRM) <span className="ml-1 text-[10px] bg-red-500/20 text-red-500 px-1 rounded-full font-bold self-center border border-red-500/20">!</span>
+            </button>
+             <button 
                 onClick={() => setView("pr")}
                 className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'pr' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
             >
-                PR & Marketing <span className="ml-1 text-[10px] bg-artitalk-gold text-black px-1 rounded-full font-bold">1</span>
+                PR & Marketing
             </button>
             <button 
                 onClick={() => setView("chat")}
@@ -163,22 +243,135 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                             </button>
                             </div>
                     </div>
-
-                    {/* Visitor Stats */}
-                    <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                         {/* ... (Keep same stats) ... */}
-                         <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <span className="block text-2xl font-serif text-white">12</span>
-                                <span className="text-[10px] text-stone-500 uppercase">Návštěvníků</span>
-                            </div>
-                            <div>
-                                <span className="block text-2xl font-serif text-white">8m 30s</span>
-                                <span className="text-[10px] text-stone-500 uppercase">Dwell Time</span>
-                            </div>
+                </div>
+            ) : view === "crm" ? (
+                 <div className="flex h-full">
+                    {/* Visitor List */}
+                    <div className={`${selectedVisitorId ? 'hidden md:block w-1/3' : 'w-full'} border-r border-white/5 overflow-y-auto`}>
+                        <div className="p-4 sticky top-0 bg-[#0F0F0F] z-10 border-b border-white/5">
+                             <div className="relative">
+                                <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                                <input className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-3 py-2 text-xs text-white" placeholder="Hledat návštěvníka..." />
+                             </div>
+                        </div>
+                        <div className="divide-y divide-white/5">
+                            {MOCK_VISITORS.map(v => (
+                                <button 
+                                    key={v.id}
+                                    onClick={() => setSelectedVisitorId(v.id)}
+                                    className={`w-full text-left p-4 hover:bg-white/5 transition-colors ${selectedVisitorId === v.id ? 'bg-white/5 border-l-2 border-artitalk-gold' : ''}`}
+                                >
+                                    <div className="flex justify-between items-start mb-1">
+                                        <span className={`text-xs font-bold ${v.incidents.length > 0 ? 'text-red-400' : 'text-white'}`}>
+                                            {v.name}
+                                        </span>
+                                        {v.incidents.length > 0 && <AlertTriangle className="w-3 h-3 text-red-500" />}
+                                    </div>
+                                    <div className="flex items-center gap-2 text-[10px] text-stone-500">
+                                        <span className={`w-1.5 h-1.5 rounded-full ${v.status === 'active' ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                                        {v.status === 'active' ? 'V prostoru' : 'Odešel'} • {v.dwellTime}
+                                    </div>
+                                    <p className="text-[10px] text-stone-400 mt-2 truncate w-full">
+                                        {v.profile}
+                                    </p>
+                                </button>
+                            ))}
                         </div>
                     </div>
-                </div>
+
+                    {/* Detail View */}
+                    <div className={`${selectedVisitorId ? 'w-full md:w-2/3' : 'hidden'} bg-black/10 overflow-y-auto`}>
+                        {selectedVisitor ? (
+                            <div>
+                                {/* Detail Header */}
+                                <div className="p-6 border-b border-white/5 flex justify-between items-start">
+                                    <div>
+                                         <div className="flex items-center gap-2 mb-2">
+                                            <button onClick={() => setSelectedVisitorId(null)} className="md:hidden text-stone-500 mr-2">
+                                                ← Zpět
+                                            </button>
+                                            <h2 className="text-xl font-serif text-white">{selectedVisitor.name}</h2>
+                                             {selectedVisitor.incidents.length > 0 && 
+                                                <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/20 text-red-400 text-[10px] font-bold uppercase rounded">Incident Detected</span>
+                                             }
+                                         </div>
+                                         <div className="flex gap-4 text-xs text-stone-400">
+                                            <span>Poslední výskyt: <b className="text-white">{selectedVisitor.lastSeen}</b></span>
+                                            <span>Profil: <b className="text-artitalk-gold">{selectedVisitor.profile}</b></span>
+                                         </div>
+                                    </div>
+                                </div>
+                                
+                                {/* Evidence Gallery */}
+                                <div className="p-6 border-b border-white/5">
+                                    <h4 className="text-xs font-bold uppercase text-stone-500 mb-3 flex items-center gap-2">
+                                        <Camera className="w-3 h-3" /> Vizualizace kamer
+                                    </h4>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="bg-white/5 aspect-video rounded flex items-center justify-center border border-white/10 uppercase text-[10px] text-stone-500">
+                                            Kamera 1 - Vstup (14:02)
+                                        </div>
+                                         <div className="bg-white/5 aspect-video rounded flex items-center justify-center border border-white/10 uppercase text-[10px] text-stone-500">
+                                            Kamera 3 - Sektor B (14:10)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Incidents & History */}
+                                <div className="p-6 space-y-6">
+                                    {selectedVisitor.incidents.length > 0 && (
+                                        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                                            <h4 className="text-red-400 font-bold text-xs uppercase mb-2 flex items-center gap-2">
+                                                <AlertTriangle className="w-4 h-4" /> Aktivní Incidenty
+                                            </h4>
+                                            <ul className="space-y-1">
+                                                {selectedVisitor.incidents.map((inc, i) => (
+                                                    <li key={i} className="text-sm text-white">• {inc}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    <div>
+                                         <h4 className="text-xs font-bold uppercase text-stone-500 mb-3 flex items-center gap-2">
+                                            <MessageSquare className="w-3 h-3" /> Přepis interakce s Artitalkem
+                                        </h4>
+                                        <div className="bg-white/5 rounded-xl p-4 space-y-2 text-sm text-stone-300 font-mono">
+                                            {selectedVisitor.transcript.length > 0 ? selectedVisitor.transcript.map((line, i) => (
+                                                <p key={i}><span className="text-white/30 text-[10px] mr-2">14:{10+i}</span> "{line}"</p>
+                                            )) : <p className="italic text-white/20">Žádná verbální interakce.</p>}
+                                        </div>
+                                    </div>
+                                    
+                                     {selectedVisitor.associates.length > 0 && (
+                                         <div>
+                                            <h4 className="text-xs font-bold uppercase text-stone-500 mb-3 flex items-center gap-2">
+                                                <Users className="w-3 h-3" /> Doprovod (Social Graph)
+                                            </h4>
+                                            <div className="flex gap-2">
+                                                {selectedVisitor.associates.map(assocId => {
+                                                    const assoc = MOCK_VISITORS.find(v => v.id === assocId);
+                                                    return assoc ? (
+                                                        <div key={assocId} className="flex items-center gap-2 bg-white/5 rounded px-3 py-2 border border-white/10 cursor-pointer hover:bg-white/10" onClick={() => setSelectedVisitorId(assocId)}>
+                                                            <div className="w-6 h-6 rounded-full bg-stone-700 flex items-center justify-center text-[10px] text-white font-bold">{assoc.name[0]}</div>
+                                                            <span className="text-xs text-white">{assoc.name}</span>
+                                                        </div>
+                                                    ) : null;
+                                                })}
+                                            </div>
+                                         </div>
+                                     )}
+                                </div>
+
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center h-full text-stone-500">
+                                <User className="w-12 h-12 mb-4 opacity-20" />
+                                <p className="text-sm">Vyberte návštěvníka pro detail</p>
+                            </div>
+                        )}
+                    </div>
+                 </div>
             ) : view === "pr" ? (
                 <div className="p-6 space-y-6">
                      <div className="space-y-2">
