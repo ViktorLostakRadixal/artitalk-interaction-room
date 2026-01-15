@@ -55,12 +55,22 @@ export function ChatInterface() {
     scrollToBottom();
   }, [messages]);
 
-  // Simulation Effect
+  // Simulation Effect with Visibility Check (Token Saver)
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
+    let isRunning = true;
+
     const simulateChat = () => {
+       if (!isRunning || document.hidden) return; // Stop if unmounted or hidden
+
        const randomDelay = Math.random() * 10000 + 5000; // 5-15 seconds
        timeoutId = setTimeout(() => {
+           if (document.hidden) {
+               // If hidden during timeout, wait for visibility to resume usually, 
+               // but here we just exit and let the visibility handler restart it.
+               return; 
+           }
+
            const nextMsg = MOCK_MESSAGES[Math.floor(Math.random() * MOCK_MESSAGES.length)];
            if (nextMsg) {
              setMessages(prev => [...prev, {
@@ -74,8 +84,25 @@ export function ChatInterface() {
        }, randomDelay);
     };
     
+    // Start simulation
     simulateChat();
-    return () => clearTimeout(timeoutId);
+
+    // Visibility Handler
+    const handleVisibilityChange = () => {
+        if (document.hidden) {
+            clearTimeout(timeoutId); // Pause immediately
+        } else {
+            simulateChat(); // Resume
+        }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+        isRunning = false;
+        clearTimeout(timeoutId);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   const handleSend = () => {
