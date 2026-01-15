@@ -53,10 +53,13 @@ export async function POST(req: Request) {
     const text = response.text();
 
     return NextResponse.json({ text });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini API Error:", error);
     return NextResponse.json(
-      { error: "Komunikace s AI selhala. Zkontrolujte API klíč." },
+      { 
+        error: `Backend Error: ${error.message || "Unknown error"}`, 
+        details: JSON.stringify(error) 
+      },
       { status: 500 }
     );
   }
