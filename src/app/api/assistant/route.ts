@@ -38,7 +38,8 @@ export async function POST(req: Request) {
     // Fallback to 'gemini-pro' or 'gemini-1.5-flash' if 'gemini-2.5-flash' is not yet public logic mapped here.
     // Using 'gemini-1.5-flash' as safe default for "flash" class models or specific version if known.
     // User requested gemini-2.5-flash, assuming it works or alias exists.
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", systemInstruction: SYSTEM_PROMPT });
+    // User requested gemini-2.5-flash.
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: SYSTEM_PROMPT });
 
     const chat = model.startChat({
       history: history || [],
