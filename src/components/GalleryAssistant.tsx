@@ -11,11 +11,11 @@ interface GalleryAssistantProps {
 
 export function GalleryAssistant({ className }: GalleryAssistantProps) {
   const [input, setInput] = useState("");
-  const [view, setView] = useState<"dashboard" | "chat">("dashboard");
+  const [view, setView] = useState<"dashboard" | "chat" | "pr">("dashboard");
   const [messages, setMessages] = useState<Array<{ role: string; text: string }>>([
     {
       role: "model",
-      text: "Viktore, situace je stabilní. Detekuji 3 high-value příležitosti. Profil 'Investiční Sběratel' u díla A. Mám připravený scénář oslovení.",
+      text: "Viktore, situace je stabilní. Mám připravený PR návrh pro segment 'Architekti'.",
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,11 +62,24 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
     <div className={clsx("flex flex-col h-full bg-[#0F0F0F] border-r border-white/5", className)}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/20">
-            <div className="flex items-center gap-2">
-            <Bot className="w-5 h-5 text-artitalk-gold" />
-            <h2 className="text-white font-serif text-lg tracking-wide">
-                Command Center
-            </h2>
+            <div className="flex items-center gap-3">
+            {/* Karpuchina Fish Logo (Symbolic) */}
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5 text-black" strokeWidth="2">
+                    <path d="M6.5 12c.5-2 2-3.5 4-4 2 .5 3.5 2 4 4-2 2-3.5 3.5-5.5 3-2-.5-2.5-2-2.5-3z" />
+                    <path d="M16 12c-1.5 1-3 1.5-4.5 1S9 12 9 12" />
+                    <path d="M20 12l-2-2m2 2l-2 2" />
+                    <circle cx="9" cy="11.5" r="0.5" fill="black" />
+                 </svg>
+            </div>
+            <div>
+                <h2 className="text-white font-serif text-lg tracking-wide leading-none">
+                    KARPUCHINA
+                </h2>
+                <span className="text-[10px] text-stone-500 uppercase tracking-widest block mt-1">
+                    GALLERY | RYBNÁ 9
+                </span>
+            </div>
             </div>
             {/* Live Indicator */}
             <div className="flex items-center gap-2">
@@ -76,16 +89,22 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
         </div>
 
         {/* View Switcher */}
-            <div className="flex px-6 pt-4 gap-4 text-sm font-medium border-b border-white/5 pb-0">
+            <div className="flex px-6 pt-4 gap-4 text-xs md:text-sm font-medium border-b border-white/5 pb-0 overflow-x-auto">
             <button 
                 onClick={() => setView("dashboard")}
-                className={`pb-3 border-b-2 transition-colors ${view === 'dashboard' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'dashboard' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
             >
-                Přehled & Klasifikace
+                Přehled
+            </button>
+            <button 
+                onClick={() => setView("pr")}
+                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'pr' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+            >
+                PR & Marketing <span className="ml-1 text-[10px] bg-artitalk-gold text-black px-1 rounded-full font-bold">1</span>
             </button>
             <button 
                 onClick={() => setView("chat")}
-                className={`pb-3 border-b-2 transition-colors ${view === 'chat' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
+                className={`pb-3 border-b-2 transition-colors whitespace-nowrap ${view === 'chat' ? 'border-artitalk-gold text-artitalk-gold' : 'border-transparent text-stone-500 hover:text-stone-300'}`}
             >
                 AI Konzultant
             </button>
@@ -109,7 +128,7 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                             </div>
                     </div>
 
-                    {/* Revenue Opportunity - HIGHLIGHTED */}
+                    {/* Revenue Opportunity */}
                     <div className="p-4 rounded-xl bg-gradient-to-b from-artitalk-gold/20 to-transparent border border-artitalk-gold/30 shadow-lg shadow-artitalk-gold/5">
                             <div className="flex items-center gap-3 mb-3">
                             <div className="p-2 bg-artitalk-gold/10 rounded-lg">
@@ -145,15 +164,10 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                             </div>
                     </div>
 
-                        {/* Visitor Stats */}
-                        <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                            <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 bg-white/10 rounded-lg">
-                                <Users className="w-5 h-5 text-stone-300" />
-                            </div>
-                            <h3 className="text-sm text-stone-300 font-bold uppercase tracking-wider">Metriky Prostoru</h3>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
+                    {/* Visitor Stats */}
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                         {/* ... (Keep same stats) ... */}
+                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <span className="block text-2xl font-serif text-white">12</span>
                                 <span className="text-[10px] text-stone-500 uppercase">Návštěvníků</span>
@@ -162,8 +176,47 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                                 <span className="block text-2xl font-serif text-white">8m 30s</span>
                                 <span className="text-[10px] text-stone-500 uppercase">Dwell Time</span>
                             </div>
-                            </div>
+                        </div>
                     </div>
+                </div>
+            ) : view === "pr" ? (
+                <div className="p-6 space-y-6">
+                     <div className="space-y-2">
+                        <h3 className="text-stone-400 text-xs font-bold uppercase tracking-wider">Navrhované Kampaně</h3>
+                        
+                        {/* PR Card 1 */}
+                        <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-artitalk-gold/30 transition-colors">
+                            <div className="p-4 border-b border-white/5 bg-white/5">
+                                <div className="flex justify-between items-start mb-2">
+                                     <span className="text-xs font-bold bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">Newsletter / VIP</span>
+                                     <span className="text-[10px] text-stone-500">Dnes, 10:42</span>
+                                </div>
+                                <h4 className="text-white font-serif tracking-wide text-lg">Reevaluace sbírky: Filip Sklenář</h4>
+                            </div>
+                            <div className="p-4 space-y-4">
+                                <div>
+                                    <span className="text-[10px] uppercase text-artitalk-gold font-bold block mb-1">Strategický Kontext (Why This? Why Now?)</span>
+                                    <p className="text-sm text-stone-300 leading-relaxed">
+                                        Tržní hodnota Sklenářových děl stoupla o 8% za Q3. Klienti, kteří nakoupili v roce 2021, nyní "sedí" na zisku. 
+                                        Oslovením s propočtem zhodnocení posílíme důvěru a otevřeme dveře pro nákup novějších, dražších děl.
+                                    </p>
+                                </div>
+                                <div className="bg-black/40 p-3 rounded border border-white/5 text-xs text-stone-400 font-mono">
+                                    Předmět: Vaše investice do díla Filipa Sklenáře<br/><br/>
+                                    Vážený kliente,<br/>
+                                    dovoluji si Vám zaslat aktuální valuaci...
+                                </div>
+                                <div className="flex gap-2 pt-2">
+                                    <button className="flex-1 py-2 bg-artitalk-gold text-black font-bold uppercase text-xs rounded hover:bg-yellow-400 transition-colors">
+                                        Schválit a Odeslat
+                                    </button>
+                                    <button className="px-3 py-2 bg-white/10 text-white font-bold uppercase text-xs rounded hover:bg-white/20 transition-colors">
+                                        Upravit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
                 </div>
             ) : (
                 <div className="p-4 space-y-4">
