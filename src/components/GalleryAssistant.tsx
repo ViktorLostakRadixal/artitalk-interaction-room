@@ -121,12 +121,14 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
       
       if (data.text) {
         setMessages((prev) => [...prev, { role: "model", text: data.text }]);
+      } else if (data.error) {
+         setMessages((prev) => [...prev, { role: "model", text: `SYSTEM ERROR: ${data.error}` }]);
       } else {
-         setMessages((prev) => [...prev, { role: "model", text: "Spojení přerušeno. Zkouším obnovit..." }]);
+         setMessages((prev) => [...prev, { role: "model", text: `UNKNOWN ERROR: ${JSON.stringify(data)}` }]);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setMessages((prev) => [...prev, { role: "model", text: "Chyba komunikace s AI." }]);
+      setMessages((prev) => [...prev, { role: "model", text: `CLIENT EXCEPTION: ${error.message || JSON.stringify(error)}` }]);
     } finally {
       setIsLoading(false);
     }
