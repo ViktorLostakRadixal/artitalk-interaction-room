@@ -1,8 +1,11 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
-// Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
+// Initialize OpenAI client configured for Gemini's OpenAI-compatible endpoint
+const openai = new OpenAI({
+  apiKey: process.env.GOOGLE_API_KEY || "",
+  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+});
 
 const SYSTEM_PROMPT = `
 Jsi "Artitalk Business Strategist" – vysoce sofistikovaný AI systém pro správu a monetizaci Karpuchina Gallery.
@@ -33,33 +36,33 @@ Vážený pane [Příjmení], analýza trhu potvrzuje správnost Vaší investic
 export async function POST(req: Request) {
   try {
     const { message, history } = await req.json();
-    
-    // For specific model version, ensure your API key supports it. 
-    // Fallback to 'gemini-pro' or 'gemini-1.5-flash' if 'gemini-2.5-flash' is not yet public logic mapped here.
-    // Using 'gemini-1.5-flash' as safe default for "flash" class models or specific version if known.
-    // User requested gemini-2.5-flash, assuming it works or alias exists.
-    // User requested gemini-2.5-flash.
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: SYSTEM_PROMPT });
 
-    const chat = model.startChat({
-      history: history || [],
-      generationConfig: {
-        maxOutputTokens: 4000,
-        temperature: 0.7,
-      },
+    // Convert Gemini history format to OpenAI message format
+    const messages: any[] = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...(history || []).map((h: any) => ({
+        role: h.role === "model" ? "assistant" : "user",
+        content: h.parts[0].text
+      })),
+      { role: "user", content: message }
+    ];
+
+    const response = await openai.chat.completions.create({
+      model: "gemini-2.5-flash",
+      messages: messages,
+      temperature: 0.7,
+      max_tokens: 4000,
     });
 
-    const result = await chat.sendMessage(message);
-    const response = await result.response;
-    const text = response.text();
+    const text = response.choices[0].message.content;
 
     return NextResponse.json({ text });
   } catch (error: any) {
-    console.error("Gemini API Error:", error);
+    console.error("AI API Error:", error);
     return NextResponse.json(
-      { 
-        error: `Backend Error: ${error.message || "Unknown error"}`, 
-        details: JSON.stringify(error) 
+      {
+        error: `Backend Error: ${error.message || "Unknown error"}`,
+        details: JSON.stringify(error)
       },
       { status: 500 }
     );
