@@ -32,6 +32,13 @@ export function ViewSwitcher({ view, setView }: ViewSwitcherProps) {
                 {view === 'pr' && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[2px] bg-electric-cyan shadow-[0_0_10px_#22d3ee]" />}
             </button>
             <button
+                onClick={() => setView("emails")}
+                className={`pb-4 pt-6 transition-all relative whitespace-nowrap ${view === "emails" ? "text-white" : "text-slate-500 hover:text-slate-300"}`}
+            >
+                Communications
+                {view === "emails" && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-[2px] bg-electric-cyan shadow-[0_0_10px_#22d3ee]" />}
+            </button>
+            <button
                 onClick={() => setView("chat")}
                 className={`pb-4 pt-6 transition-all relative whitespace-nowrap ${view === 'chat' ? 'text-white' : 'text-slate-500 hover:text-slate-300'}`}
             >

@@ -12,6 +12,7 @@ import { ChatConsultantView } from "./GalleryAssistant/ChatConsultantView";
 import { GalleryHeader } from "./GalleryAssistant/GalleryHeader";
 import { ViewSwitcher } from "./GalleryAssistant/ViewSwitcher";
 import { AssistantInput } from "./GalleryAssistant/AssistantInput";
+import { EmailHistoryView } from "./GalleryAssistant/EmailHistoryView";
 
 interface GalleryAssistantProps {
     className?: string;
@@ -49,6 +50,8 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
                 )}
 
                 {view === "pr" && <CampaignsView />}
+
+                {view === "emails" && <EmailHistoryView />}
 
                 {view === "live_feed" && (
                     <div className="h-full flex flex-col">

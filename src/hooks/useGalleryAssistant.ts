@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MOCK_VISITORS } from "../data/mockVisitors";
 
-export type GalleryView = "dashboard" | "chat" | "pr" | "crm" | "live_feed";
+export type GalleryView = "dashboard" | "chat" | "pr" | "crm" | "live_feed" | "emails";
 
 export interface Message {
     role: string;

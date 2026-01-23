@@ -1,6 +1,7 @@
-import { Search, AlertTriangle } from "lucide-react";
+import { Search, AlertTriangle, Mail } from "lucide-react";
 import { Visitor } from "../../types/visitor";
 import { MOCK_VISITORS } from "../../data/mockVisitors";
+import { MOCK_EMAILS } from "../../data/mockEmails";
 
 interface VisitorCRMViewProps {
     selectedVisitorId: string | null;
@@ -92,6 +93,25 @@ export function VisitorCRMView({ selectedVisitorId, setSelectedVisitorId, select
                                         </p>
                                     </div>
                                 )) : <p className="text-slate-800 text-[10px] font-black uppercase tracking-[0.4em] py-8 text-center italic border-2 border-dashed border-slate-900 rounded-lg">No verbal interaction recorded.</p>}
+                            </div>
+                        </div>
+
+                        {/* Communication History - Direct Link Log */}
+                        <div className="space-y-6">
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 font-mono flex items-center gap-4">
+                                Recent Communications
+                                <div className="flex-1 h-px bg-slate-900" />
+                            </h4>
+                            <div className="space-y-3">
+                                {MOCK_EMAILS.filter(e => e.visitorId === selectedVisitorId).length > 0 ? MOCK_EMAILS.filter(e => e.visitorId === selectedVisitorId).map((email) => (
+                                    <div key={email.id} className="hud-card p-4 rounded-lg flex justify-between items-center border-l-2 border-electric-cyan/10">
+                                        <div className="space-y-0.5">
+                                            <span className="text-[11px] font-mono text-white block truncate">{email.subject}</span>
+                                            <span className="text-[9px] text-slate-500 font-mono uppercase italic">{email.timestamp.substring(0, 10)} // Status: {email.status}</span>
+                                        </div>
+                                        <Mail className="w-4 h-4 text-electric-cyan/30" />
+                                    </div>
+                                )) : <p className="text-slate-800 text-[10px] font-mono uppercase tracking-[0.2em] italic">No prior communication history found.</p>}
                             </div>
                         </div>
                     </div>
