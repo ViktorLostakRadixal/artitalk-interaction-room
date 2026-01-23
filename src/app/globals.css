@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-artitalk-gold: #FFD700;
-  --color-artitalk-dark: #0a0a0a;
-  --color-artitalk-panel: #171717;
-  --color-status-live: #ef4444;
-  
+  --color-midnight-deep: #030712;
+  --color-midnight-surface: #0f172a;
+  --color-midnight-panel: #1e293b;
+  --color-electric-cyan: #22d3ee;
+
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
+  --font-mono: var(--font-jet-brains);
 }
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #030712;
+  --foreground: #f1f5f9;
 }
 
 body {
@@ -22,17 +23,50 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar for "Teletník" feel */
+.hud-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 211, 238, 0.1);
+}
+
+.hud-card {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+}
+
+/* Precision Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
+
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #030712;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
+  background: #334155;
+  border-radius: 2px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #FFD700;
+  background: #22d3ee;
+}
+
+@keyframes pulse-cyan {
+
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+
+  50% {
+    opacity: 0.6;
+    filter: brightness(0.8);
+  }
+}
+
+.animate-pulse-cyan {
+  animation: pulse-cyan 3s infinite;
 }

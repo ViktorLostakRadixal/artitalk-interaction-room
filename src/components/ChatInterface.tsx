@@ -24,7 +24,7 @@ const AGENT_COLORS = {
 export function ChatInterface() {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   // Mock initial state
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -61,47 +61,45 @@ export function ChatInterface() {
     let isRunning = true;
 
     const simulateChat = () => {
-       if (!isRunning || document.hidden) return; // Stop if unmounted or hidden
+      if (!isRunning || document.hidden) return; // Stop if unmounted or hidden
 
-       const randomDelay = Math.random() * 10000 + 5000; // 5-15 seconds
-       timeoutId = setTimeout(() => {
-           if (document.hidden) {
-               // If hidden during timeout, wait for visibility to resume usually, 
-               // but here we just exit and let the visibility handler restart it.
-               return; 
-           }
+      const randomDelay = Math.random() * 10000 + 5000; // 5-15 seconds
+      timeoutId = setTimeout(() => {
+        if (document.hidden) {
+          return;
+        }
 
-           const nextMsg = MOCK_MESSAGES[Math.floor(Math.random() * MOCK_MESSAGES.length)];
-           if (nextMsg) {
-             setMessages(prev => [...prev, {
-                id: Date.now().toString(),
-                sender: nextMsg.sender || "System",
-                text: nextMsg.text || "",
-                timestamp: new Date().toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' }) 
-             } as Message]);
-           }
-           simulateChat();
-       }, randomDelay);
+        const nextMsg = MOCK_MESSAGES[Math.floor(Math.random() * MOCK_MESSAGES.length)];
+        if (nextMsg) {
+          setMessages(prev => [...prev, {
+            id: Date.now().toString(),
+            sender: nextMsg.sender || "System",
+            text: nextMsg.text || "",
+            timestamp: new Date().toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' })
+          } as Message]);
+        }
+        simulateChat();
+      }, randomDelay);
     };
-    
+
     // Start simulation
     simulateChat();
 
     // Visibility Handler
     const handleVisibilityChange = () => {
-        if (document.hidden) {
-            clearTimeout(timeoutId); // Pause immediately
-        } else {
-            simulateChat(); // Resume
-        }
+      if (document.hidden) {
+        clearTimeout(timeoutId); // Pause immediately
+      } else {
+        simulateChat(); // Resume
+      }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-        isRunning = false;
-        clearTimeout(timeoutId);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
+      isRunning = false;
+      clearTimeout(timeoutId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
@@ -119,8 +117,8 @@ export function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full w-full relative">
-       {/* Messages Area */}
-       <div className="flex-1 overflow-y-auto px-8 py-20 space-y-12 custom-scrollbar">
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto px-8 py-20 space-y-12 custom-scrollbar">
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div
@@ -133,26 +131,26 @@ export function ChatInterface() {
               )}
             >
               <div className="flex flex-col gap-2">
-                 <div className="flex items-center gap-3 mb-1">
-                    <span className={clsx(
-                        "text-[10px] font-bold uppercase tracking-[0.2em]",
-                        msg.sender === "User" ? "ml-auto text-stone-900" : "text-stone-400",
-                        msg.sender === "Petr" && "text-blue-600",
-                        msg.sender === "Ester" && "text-purple-600"
-                    )}>
-                        {msg.sender === "System" ? "• Station" : msg.sender}
-                    </span>
-                    <span className="text-[10px] text-stone-300">
-                        {msg.timestamp}
-                    </span>
-                 </div>
-                 
-                 <p className={clsx(
-                    "leading-relaxed text-lg break-words font-serif",
-                    msg.sender === "System" ? "text-stone-400 italic" : "text-stone-800"
-                 )}>
-                    {msg.text}
-                 </p>
+                <div className="flex items-center gap-3 mb-1">
+                  <span className={clsx(
+                    "text-[10px] font-bold uppercase tracking-[0.2em] font-mono",
+                    msg.sender === "User" ? "ml-auto text-electric-cyan" : "text-slate-500",
+                    msg.sender === "Petr" && "text-blue-400",
+                    msg.sender === "Ester" && "text-purple-400"
+                  )}>
+                    {msg.sender === "System" ? "• Station" : msg.sender}
+                  </span>
+                  <span className="text-[10px] text-slate-700 font-mono">
+                    {msg.timestamp}
+                  </span>
+                </div>
+
+                <p className={clsx(
+                  "leading-relaxed text-lg break-words font-sans",
+                  msg.sender === "System" ? "text-slate-400 italic" : "text-slate-100"
+                )}>
+                  {msg.text}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -163,25 +161,25 @@ export function ChatInterface() {
       {/* Input Area - Minimalist */}
       <div className="p-8 z-10 w-full max-w-2xl mx-auto">
         <div className="relative">
-           <textarea
-             className="w-full bg-transparent border-b border-stone-200 focus:border-stone-900 text-stone-900 placeholder-stone-300 resize-none min-h-[44px] py-2 text-lg font-serif focus:outline-none transition-colors"
-             placeholder="Contribute to the dialogue..."
-             rows={1}
-             value={input}
-             onChange={(e) => setInput(e.target.value)}
-             onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                }
-             }}
-           />
-           <button 
-             onClick={handleSend}
-             className="absolute right-0 bottom-3 text-stone-400 hover:text-stone-900 transition-colors"
-           >
-             <Send className="w-5 h-5" />
-           </button>
+          <textarea
+            className="w-full bg-midnight-surface/30 backdrop-blur-sm border-b border-electric-cyan/20 focus:border-electric-cyan text-white placeholder-slate-700 resize-none min-h-[44px] py-2 text-lg font-sans focus:outline-none transition-all"
+            placeholder="Contribute to the dialogue..."
+            rows={1}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+          />
+          <button
+            onClick={handleSend}
+            className="absolute right-0 bottom-3 text-electric-cyan/40 hover:text-electric-cyan transition-colors"
+          >
+            <Send className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </div>

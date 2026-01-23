@@ -32,7 +32,7 @@ export function GalleryAssistant({ className }: GalleryAssistantProps) {
     } = useGalleryAssistant();
 
     return (
-        <div className={clsx("flex flex-col h-full bg-white text-stone-900 font-sans", className)}>
+        <div className={clsx("flex flex-col h-full bg-[#030712] text-white font-sans", className)}>
             <GalleryHeader />
 
             <ViewSwitcher view={view} setView={setView} />

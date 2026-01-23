@@ -9,28 +9,28 @@ interface AssistantInputProps {
 
 export function AssistantInput({ input, setInput, handleSend, isLoading }: AssistantInputProps) {
     return (
-        <div className="p-8 bg-white border-t border-stone-50 md:border-t-0">
-            <div className="relative">
+        <div className="p-8 bg-midnight-deep border-t border-electric-cyan/10">
+            <div className="relative max-w-3xl mx-auto group">
                 <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSend()}
                     placeholder="Type your command..."
-                    className="w-full bg-transparent border-b border-stone-200 py-3 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:border-stone-900 transition-colors font-serif"
+                    className="w-full bg-midnight-surface/50 border-b border-electric-cyan/30 py-4 px-6 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-electric-cyan/80 transition-all font-mono tracking-wider caret-electric-cyan rounded-t-lg"
                 />
                 <button
                     onClick={handleSend}
                     disabled={isLoading}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-900 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-electric-cyan/40 hover:text-electric-cyan transition-colors"
                 >
-                    <Send className="w-4 h-4" />
+                    <Send className="w-5 h-5" />
                 </button>
             </div>
-            <div className="mt-4 text-[10px] text-stone-300 text-center space-y-1">
-                <p>Powered by <strong className="text-stone-500">A VIRTÙ RESEARCH & TECHNOLOGIES s.r.o.</strong></p>
-                <p className="text-stone-200">Legal Compliance & Data Protection Guaranteed</p>
-                <p className="opacity-50">Kuršova 978/3, Brno • IČ 08428441 • avirtu.net</p>
+            <div className="mt-6 text-[10px] text-slate-600 text-center space-y-1 font-mono uppercase tracking-[0.1em]">
+                <p>Powered by <strong className="text-electric-cyan/60">A VIRTÙ RESEARCH & TECHNOLOGIES s.r.o.</strong></p>
+                <p className="text-slate-700">Legal Compliance & Data Protection Guaranteed</p>
+                <p className="opacity-40">Kuršova 978/3, Brno • IČ 08428441 • avirtu.net</p>
             </div>
         </div>
     );
